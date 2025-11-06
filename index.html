@@ -1,771 +1,290 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Green introduce</title>
-<style>
-  :root{
-    --bg:#f6fbf6;
-    --card:#ffffff;
-    --muted:#9aa5a0;
-    --accent:#2f9d5a;
-    --accent-weak:#cfe9d6;
-    --soft-shadow: 0 6px 18px rgba(20,30,20,0.08);
-    --glass: rgba(255,255,255,0.7);
-    font-family: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  }
-  html,body{
-    height:100%;
-    margin:0;
-    background: linear-gradient(180deg, #f2fbf5 0%, #eef8ef 100%);
-    color:#15251b;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Introduce</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Pretendard', sans-serif;
+    }
 
-  /* 전체 섹션 컨테이너 — 세로 스크롤 */
-  .sections{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    scroll-snap-type: y mandatory;
-    overflow-y: auto;
-  }
-  section{
-    min-height:100vh;
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:40px;
-    box-sizing:border-box;
-    scroll-snap-align:start;
-  }
+    html, body {
+      height: 100%;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
 
-  /* 1,2 섹션 공통 카드 */
-  .card{
-    width:420px;
-    max-width:92%;
-    background:var(--card);
-    border-radius:18px;
-    padding:36px;
-    box-shadow:var(--soft-shadow);
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-    align-items:center;
-  }
+    section {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
 
-  h1.app-title{
-    margin:0;
-    font-size:40px;
-    letter-spacing:1px;
-    font-weight:700;
-    color:#0b0b0b;
-    transform:translateY(-8px);
-  }
-  .small-muted{
-    color:var(--muted);
-    font-size:13px;
-  }
+    /* 공통 입력 스타일 */
+    input {
+      width: 250px;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
 
-  input[type="text"], input[type="password"], input[type="date"]{
-    width:100%;
-    padding:12px 14px;
-    border-radius:10px;
-    border:1px solid #e6efe7;
-    background:transparent;
-    outline:none;
-    font-size:15px;
-    color:#0b0b0b;
-    box-shadow:inset 0 1px 0 rgba(0,0,0,0.02);
-  }
-  input::placeholder{ color: var(--muted); }
+    input::placeholder {
+      color: #aaa;
+    }
 
-  .muted-link{
-    color:var(--muted);
-    font-size:13px;
-    cursor:pointer;
-    user-select:none;
-    transition: color .15s ease;
-  }
-  .muted-link.enabled{
-    color: #4b9f5a;
-    font-weight:600;
-  }
+    a {
+      color: gray;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 14px;
+      text-decoration: none;
+    }
 
-  /* 섹션2 폼 간격 */
-  .signup-fields{
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
+    a:hover {
+      text-decoration: underline;
+    }
 
-  /* 섹션3 — 가로 카드 레이아웃 */
-  #section3{
-    position:relative;
-    overflow:hidden;
-    background:
-      linear-gradient(180deg, rgba(47,157,90,0.06), rgba(47,157,90,0.02));
-  }
+    /* 1️⃣ 첫 번째 섹션 (로그인) */
+    #section1 {
+      background: #f6f6f6;
+    }
 
-  .three-top{
-    position:absolute;
-    top:20px;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 60px);
-    max-width:1200px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    padding:12px 18px;
-    border-radius:14px;
-    background: rgba(255,255,255,0.75);
-    box-shadow:var(--soft-shadow);
-    z-index:5;
-  }
-  .profile {
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-  .avatar{
-    width:56px; height:56px; border-radius:12px;
-    background:linear-gradient(135deg,#c6f0d1,#9fe2b6);
-    display:flex; align-items:center; justify-content:center;
-    font-weight:700; color:#08562f;
-    box-shadow:0 6px 20px rgba(10,40,20,0.06);
-  }
-  .profile .meta{ display:flex; flex-direction:column; gap:2px; }
-  .profile .meta .name{ font-weight:700; font-size:15px; }
-  .profile .meta .sub{ font-size:13px; color:var(--muted); }
+    #title {
+      font-size: 2em;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 40px;
+      margin-top: -80px;
+    }
 
-  .stats { display:flex; gap:14px; align-items:center; font-weight:600; color:#0b0b0b; }
-  .stat { background:var(--accent-weak); padding:8px 12px; border-radius:10px; font-size:14px; }
+    /* 2️⃣ 두 번째 섹션 (회원가입) */
+    #section2 {
+      background: #e8f5e9;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-  /* 가로 스크롤 컨테이너 */
-  .hframe{
-    position:absolute;
-    bottom:26px;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 40px);
-    max-width:1400px;
-    height:calc(100vh - 180px);
-    border-radius:16px;
-    overflow-x:auto;
-    overflow-y:hidden;
-    white-space:nowrap;
-    display:flex;
-    gap:18px;
-    padding:24px;
-    box-sizing:border-box;
-    scroll-snap-type: x mandatory;
-  }
+    #signup-complete {
+      display: none;
+      color: green;
+      margin-top: 10px;
+      font-weight: bold;
+    }
 
-  .panel{
-    flex:0 0 520px;
-    height:100%;
-    background:linear-gradient(180deg, #ffffff, #f7fff7);
-    border-radius:14px;
-    padding:16px;
-    box-shadow:var(--soft-shadow);
-    scroll-snap-align:center;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    box-sizing:border-box;
-  }
-  .panel h3{ margin:6px 0 0 0; font-size:18px; }
-  .panel .sub { color:var(--muted); font-size:13px; }
+    /* 회원가입 버튼 */
+    #signup-btn {
+      color: gray;
+      margin-top: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-  /* 게시물 리스트 */
-  .posts { overflow:auto; padding:6px; display:flex; flex-direction:column; gap:8px; }
-  .post{
-    background: #fff;
-    border-radius:10px;
-    padding:10px;
-    box-shadow: 0 6px 14px rgba(10,20,10,0.03);
-    font-size:14px;
-  }
+    #signup-btn.active {
+      color: #2e7d32;
+      font-weight: bold;
+    }
 
-  /* + 버튼 */
-  .plus-btn{
-    width:52px; height:52px; border-radius:12px;
-    display:inline-flex; align-items:center; justify-content:center;
-    font-weight:700; background:linear-gradient(180deg,#2f9d5a,#1f7a44); color:white;
-    border:none; cursor:pointer;
-    box-shadow:0 10px 30px rgba(20,60,30,0.12);
-  }
-  .panel-footer{
-    margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:8px;
-  }
+    /* 3️⃣ 세 번째 섹션 (메인 페이지) */
+    #section3 {
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      flex-wrap: nowrap;
+    }
 
-  /* 모달 기본 */
-  .modal-back{
-    position:fixed; inset:0; display:none; align-items:center; justify-content:center;
-    background:rgba(6,12,8,0.4); z-index:60;
-  }
-  .modal{
-    width:520px; max-width:92%;
-    background:var(--card); border-radius:12px; padding:18px; box-shadow:var(--soft-shadow);
-  }
-  .modal h4{ margin:0 0 8px 0; }
-  .modal .row{ display:flex; gap:8px; flex-direction:column; }
+    .main-container {
+      display: flex;
+      flex-direction: row;
+      width: 500vw;
+      height: 100%;
+      scroll-snap-align: start;
+    }
 
-  /* shop list */
-  .shop-list{ display:flex; flex-direction:column; gap:10px; overflow:auto; }
-  .product{ padding:10px; border-radius:10px; background:#fff; display:flex; justify-content:space-between; align-items:center; }
+    .page {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      padding: 40px;
+    }
 
-  /* responsive tweaks */
-  @media (max-width:740px){
-    .hframe{ padding:12px; }
-    .panel{ flex:0 0 86%; }
-    .card{ width:92%; padding:20px; }
-    .three-top{ left:12px; transform:none; width:calc(100% - 24px); }
-  }
-</style>
+    .page:nth-child(1) { background: #e0f2f1; } /* 커뮤니티 */
+    .page:nth-child(2) { background: #c8e6c9; } /* 캠페인 */
+    .page:nth-child(3) { background: #a5d6a7; } /* 메인 */
+    .page:nth-child(4) { background: #81c784; } /* 상점 */
+    .page:nth-child(5) { background: #66bb6a; } /* 챌린지 */
+
+    .top-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(6px);
+      font-size: 14px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: #fff;
+      padding: 12px 0;
+      border-top: 1px solid #ccc;
+      font-weight: bold;
+    }
+
+    .plus-btn {
+      position: absolute;
+      bottom: 80px;
+      right: 30px;
+      background: #43a047;
+      color: #fff;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-<div class="sections" id="sections">
-
-  <!-- SECTION 1: 로그인 전 페이지 -->
+  <!-- 1️⃣ 로그인 섹션 -->
   <section id="section1">
-    <div class="card" role="region" aria-label="로그인">
-      <h1 class="app-title">Green introduce</h1>
-      <div style="width:100%; display:flex; flex-direction:column; gap:10px; margin-top:6px;">
-        <input id="login-id" type="text" placeholder="아이디" autocomplete="username" />
-        <input id="login-pw" type="password" placeholder="비번" autocomplete="current-password" />
-      </div>
-      <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-        <div class="muted-link" id="signup-link">회원가입</div>
-        <button id="login-btn" class="plus-btn" style="width:auto;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#1f7a44,#2f9d5a);">로그인</button>
-      </div>
-      <div style="margin-top:8px; width:100%; display:flex; justify-content:center;">
-        <div class="small-muted">생태·환경을 위한 아이디어와 활동을 공유하는 공간</div>
-      </div>
-    </div>
+    <div id="title">Green introduce</div>
+    <input type="text" id="login-id" placeholder="아이디">
+    <input type="password" id="login-pw" placeholder="비번">
+    <a id="go-signup">회원가입</a>
   </section>
 
-  <!-- SECTION 2: 회원가입 페이지 -->
+  <!-- 2️⃣ 회원가입 섹션 -->
   <section id="section2">
-    <div class="card" role="region" aria-label="회원가입">
-      <h2 style="margin:0;">회원가입</h2>
-      <div class="signup-fields">
-        <input id="su-name" type="text" placeholder="이름" />
-        <input id="su-dob" type="date" placeholder="생년월일" />
-        <input id="su-id" type="text" placeholder="아이디" />
-        <input id="su-pw" type="password" placeholder="비번" />
+    <input type="text" id="signup-name" placeholder="이름">
+    <input type="text" id="signup-birth" placeholder="생년월일"> <!-- 수정된 부분 -->
+    <input type="text" id="signup-id" placeholder="아이디">
+    <input type="password" id="signup-pw" placeholder="비번">
+    <div id="signup-btn">회원가입</div>
+    <div id="signup-complete">회원가입이 완료되었습니다!</div>
+  </section>
+
+  <!-- 3️⃣ 메인 섹션 -->
+  <section id="section3">
+    <div class="top-bar">
+      <div id="profile">프로필: <span id="user-id"></span></div>
+      <div id="points">포인트: 0</div>
+      <div id="days">이용 1일차</div>
+    </div>
+
+    <div class="main-container">
+      <div class="page">커뮤니티: 자유롭게 의견 및 후원 문의 가능</div>
+      <div class="page">캠페인: 미션을 실천하고 사진/영상을 올리면 포인트 +10</div>
+      <div class="page">
+        <h2>오늘의 미션 & 참여자수</h2>
+        <p>로고, 문의, 마케팅 광고 등 표시</p>
       </div>
-      <div style="width:100%; display:flex; justify-content:center; margin-top:6px;">
-        <div id="do-signup" class="muted-link">회원가입</div>
+      <div class="page">상점: 친환경 상품 구매 / 기업은 상품 등록 및 기부 가능</div>
+      <div class="page">
+        챌린지: 환경 숏폼 시청 및 + 버튼으로 영상 업로드
+        <div class="plus-btn">+</div>
       </div>
-      <div style="margin-top:6px; color:var(--muted); font-size:13px; text-align:center;">
-        가입 후 로그인하면 바로 활동할 수 있습니다.
-      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div>커뮤니티</div>
+      <div>캠페인</div>
+      <div>Main</div>
+      <div>상점</div>
+      <div>챌린지</div>
     </div>
   </section>
 
-  <!-- SECTION 3: 메인 (가로 스크롤) -->
-  <section id="section3" aria-label="메인">
-    <!-- top profile / stats -->
-    <div class="three-top">
-      <div class="profile">
-        <div class="avatar" id="avatar-initial">GI</div>
-        <div class="meta">
-          <div class="name" id="profile-name">비회원</div>
-          <div class="sub" id="profile-sub">프로필 정보를 확인하세요</div>
-        </div>
-      </div>
-      <div class="stats">
-        <div class="stat" id="stat-points">포인트: 0원</div>
-        <div class="stat" id="stat-days">이용일수: 0일</div>
-        <div class="stat" id="stat-posts">작성글: 0</div>
-      </div>
-    </div>
+  <script>
+    const goSignup = document.getElementById("go-signup");
+    const signupBtn = document.getElementById("signup-btn");
+    const signupComplete = document.getElementById("signup-complete");
+    const section1 = document.getElementById("section1");
+    const section2 = document.getElementById("section2");
+    const section3 = document.getElementById("section3");
 
-    <!-- horizontal frame (5 panels) -->
-    <div class="hframe" id="hframe">
-      <!-- Leftmost: Community (왼쪽에서 1번째) -->
-      <div class="panel" id="panel-community">
-        <h3>Community</h3>
-        <div class="sub">후원, 문의, 자유 토론</div>
-        <div class="posts" id="community-posts">
-          <div class="post">커뮤니티에 오신 것을 환영합니다. 의견을 남겨보세요.</div>
-        </div>
-        <div class="panel-footer">
-          <input id="community-input" placeholder="문의나 후원 요청을 작성하세요" style="flex:1; padding:10px; border-radius:8px; border:1px solid #e9f1ea;" />
-          <button id="community-send" class="plus-btn" style="width:44px;height:44px;border-radius:10px;">등록</button>
-        </div>
-      </div>
+    const inputs = document.querySelectorAll("#section2 input");
+    const loginId = document.getElementById("login-id");
+    const loginPw = document.getElementById("login-pw");
+    const userIdSpan = document.getElementById("user-id");
 
-      <!-- Campaign (왼쪽에서 2번째) -->
-      <div class="panel" id="panel-campaign">
-        <h3>Campaign</h3>
-        <div class="sub">미션 제시 · 실천 게시 (실천 시 포인트 +10)</div>
-        <div class="posts" id="campaign-posts"></div>
-        <div class="panel-footer">
-          <button id="campaign-add" class="plus-btn">+</button>
-          <div style="font-size:13px; color:var(--muted);">미션을 올리고 참여를 유도하세요</div>
-        </div>
-      </div>
+    let users = {};
+    let points = 0;
 
-      <!-- Main (오른쪽에서 3번째: 가운데) -->
-      <div class="panel" id="panel-main">
-        <h3>Main</h3>
-        <div class="sub">오늘의 미션 · 참여자 수 · 로고 · 문의 · 기업 광고</div>
-
-        <div style="background:linear-gradient(180deg,#f6fff6,#ffffff); border-radius:10px; padding:12px; box-shadow:inset 0 1px 0 rgba(0,0,0,0.02);">
-          <strong>오늘의 미션</strong>
-          <div id="today-mission" style="margin-top:8px;">지역 공원에서 플로깅(쓰레기 줍기) 활동을 촬영해 올리기</div>
-          <div style="margin-top:8px; display:flex; gap:8px; align-items:center;">
-            <div class="small-muted">참여자:</div><div id="mission-count">0</div>
-          </div>
-        </div>
-
-        <div style="margin-top:10px;">
-          <div style="font-size:13px; color:var(--muted); margin-bottom:6px;">기업 마케팅 광고</div>
-          <div style="background:linear-gradient(90deg,#dff7e7,#f4fff8); padding:12px; border-radius:10px;">
-            <strong>GreenCo - 친환경 포장재 출시!</strong>
-            <div class="small-muted" style="margin-top:6px;">지속가능한 포장으로 지구를 지켜요. 자세한 문의: contact@greenco.example</div>
-          </div>
-        </div>
-
-        <div style="margin-top:12px;">
-          <div class="posts" id="main-posts"></div>
-        </div>
-
-        <div class="panel-footer">
-          <button id="main-add" class="plus-btn">+</button>
-          <div class="small-muted">증명 글(사진/동영상 대체 텍스트)을 올리면 포인트 +10</div>
-        </div>
-      </div>
-
-      <!-- Shop (오른쪽에서 2번째) -->
-      <div class="panel" id="panel-shop">
-        <h3>Shop</h3>
-        <div class="sub">포인트로 친환경 상품을 구매하거나 단체에 기부</div>
-        <div class="shop-list" id="shop-list" style="margin-top:8px;"></div>
-        <div class="panel-footer">
-          <button id="shop-add" class="plus-btn">+</button>
-          <div class="small-muted">기업은 + 버튼으로 상품을 등록할 수 있습니다</div>
-        </div>
-      </div>
-
-      <!-- Challenge (오른쪽에서 1번째) -->
-      <div class="panel" id="panel-challenge">
-        <h3>Challenge</h3>
-        <div class="sub">환경 관련 숏폼 영상 시청 및 업로드</div>
-        <div class="posts" id="challenge-posts"></div>
-        <div class="panel-footer">
-          <button id="challenge-add" class="plus-btn">+</button>
-          <div class="small-muted">+ 버튼으로 숏폼 업로드 (시뮬레이션)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 모달: 게시/업로드/상품등록 -->
-    <div id="modal-back" class="modal-back" role="dialog" aria-hidden="true">
-      <div class="modal" id="modal-body">
-        <h4 id="modal-title">Modal</h4>
-        <div class="row" id="modal-rows"></div>
-        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
-          <button id="modal-cancel" style="padding:8px 12px; border-radius:8px; border:1px solid #e6efe7; background:white; cursor:pointer;">취소</button>
-          <button id="modal-ok" class="plus-btn" style="width:auto;padding:8px 14px;border-radius:8px;">공유/등록</button>
-        </div>
-      </div>
-    </div>
-
-  </section>
-</div>
-
-<script>
-/* ---------------------------
-  간단 설명/구현 포인트
-  - 회원가입 정보와 포인트/게시물은 localStorage에 저장
-  - 섹션 이동은 scrollIntoView 사용
-  - 섹션3 가로 영역은 스크롤 가능
-  --------------------------- */
-
-/* 유틸 */
-const $ = (s)=>document.querySelector(s);
-const $$ = (s)=>document.querySelectorAll(s);
-
-const sectionsEl = document.getElementById('sections');
-const sec1 = document.getElementById('section1');
-const sec2 = document.getElementById('section2');
-const sec3 = document.getElementById('section3');
-
-/* 로컬스토리지 키 */
-const LS_USER = 'green_user_v1';
-const LS_POSTS = 'green_posts_v1';
-const LS_PRODUCTS = 'green_products_v1';
-
-/* 초기 로드: 없으면 초기값 설정 */
-function loadState(){
-  if(!localStorage.getItem(LS_POSTS)){
-    localStorage.setItem(LS_POSTS, JSON.stringify({community:[], campaign:[], main:[], challenge:[]}));
-  }
-  if(!localStorage.getItem(LS_PRODUCTS)){
-    localStorage.setItem(LS_PRODUCTS, JSON.stringify([]));
-  }
-}
-loadState();
-
-/* 섹션 이동 헬퍼 */
-function goToSection(n){
-  if(n===1) sec1.scrollIntoView({behavior:'smooth'});
-  if(n===2) sec2.scrollIntoView({behavior:'smooth'});
-  if(n===3) sec3.scrollIntoView({behavior:'smooth'});
-}
-
-/* 회원가입/로그인 처리 */
-const signupLink = document.getElementById('signup-link');
-signupLink.addEventListener('click', ()=> goToSection(2));
-
-const loginBtn = document.getElementById('login-btn');
-loginBtn.addEventListener('click', handleLogin);
-
-function handleLogin(){
-  const id = document.getElementById('login-id').value.trim();
-  const pw = document.getElementById('login-pw').value.trim();
-  const user = JSON.parse(localStorage.getItem(LS_USER) || 'null');
-  if(!user){
-    alert('등록된 계정이 없습니다. 회원가입 해주세요.');
-    goToSection(2);
-    return;
-  }
-  if(id === user.id && pw === user.pw){
-    // 로그인 성공
-    initProfileUI(user);
-    goToSection(3);
-  } else {
-    alert('아이디 또는 비밀번호가 올바르지 않습니다.');
-  }
-}
-
-/* 회원가입 UI 동작 */
-const suName = document.getElementById('su-name');
-const suDob = document.getElementById('su-dob');
-const suId = document.getElementById('su-id');
-const suPw = document.getElementById('su-pw');
-const doSignup = document.getElementById('do-signup');
-
-function checkSignupEnabled(){
-  if(suName.value.trim() && suDob.value && suId.value.trim() && suPw.value.trim()){
-    doSignup.classList.add('enabled');
-  } else {
-    doSignup.classList.remove('enabled');
-  }
-}
-[$('#su-name'), $('#su-dob'), $('#su-id'), $('#su-pw')].forEach(el=>{
-  el.addEventListener('input', checkSignupEnabled);
-});
-
-/* 회원가입 클릭 시 저장 */
-doSignup.addEventListener('click', ()=>{
-  if(!doSignup.classList.contains('enabled')) return;
-  const user = {
-    name: suName.value.trim(),
-    dob: suDob.value,
-    id: suId.value.trim(),
-    pw: suPw.value.trim(),
-    signupAt: new Date().toISOString(),
-    points: 0,
-    posts: 0
-  };
-  localStorage.setItem(LS_USER, JSON.stringify(user));
-  alert('회원가입이 완료되었습니다');
-  // 초기값 및 UI 업데이트
-  initProfileUI(user);
-  // 클리어(보안상 비밀번호는 클리어)
-  document.getElementById('su-pw').value = '';
-  // 1섹션으로 이동
-  goToSection(1);
-});
-
-/* 프로필/상태 표시 초기화 */
-const profileNameEl = document.getElementById('profile-name');
-const profileSubEl = document.getElementById('profile-sub');
-const avatarInitial = document.getElementById('avatar-initial');
-const pointsEl = document.getElementById('stat-points');
-const daysEl = document.getElementById('stat-days');
-const postsEl = document.getElementById('stat-posts');
-
-function calcDaysFrom(iso){
-  try{
-    const s = new Date(iso);
-    const now = new Date();
-    const diff = Math.floor((now - s)/ (1000*60*60*24)) + 1;
-    return diff;
-  }catch(e){ return 0; }
-}
-
-function initProfileUI(user){
-  if(!user) return;
-  profileNameEl.textContent = user.name || user.id;
-  profileSubEl.textContent = `@${user.id}`;
-  avatarInitial.textContent = (user.name ? user.name[0] : (user.id?user.id[0]:'GI')).toUpperCase();
-  pointsEl.textContent = `포인트: ${user.points || 0}원`;
-  daysEl.textContent = `이용일수: ${calcDaysFrom(user.signupAt)}일`;
-  postsEl.textContent = `작성글: ${user.posts || 0}`;
-}
-
-/* 섹션3: 게시물/포인트/제품 로딩 및 동작 */
-function loadPostsToUI(){
-  const posts = JSON.parse(localStorage.getItem(LS_POSTS));
-  // campaign
-  const campaignPosts = $('#campaign-posts');
-  campaignPosts.innerHTML = '';
-  (posts.campaign || []).slice().reverse().forEach(p=>{
-    const div = document.createElement('div'); div.className='post';
-    div.innerHTML = `<strong>${p.title || '미션'}</strong><div class="small-muted">${p.text}</div><div class="small-muted" style="margin-top:6px;">작성자: ${p.by}</div>`;
-    campaignPosts.appendChild(div);
-  });
-  // main
-  const mainPosts = $('#main-posts'); mainPosts.innerHTML='';
-  (posts.main || []).slice().reverse().forEach(p=>{
-    const div = document.createElement('div'); div.className='post';
-    div.innerHTML = `<strong>${p.title || '증명글'}</strong><div class="small-muted">${p.text}</div><div class="small-muted" style="margin-top:6px;">작성자: ${p.by}</div>`;
-    mainPosts.appendChild(div);
-  });
-  // challenge
-  const chPosts = $('#challenge-posts'); chPosts.innerHTML='';
-  (posts.challenge || []).slice().reverse().forEach(p=>{
-    const div = document.createElement('div'); div.className='post';
-    div.innerHTML = `<strong>${p.title || '숏폼'}</strong><div class="small-muted">${p.desc}</div><div class="small-muted" style="margin-top:6px;">작성자: ${p.by}</div>`;
-    chPosts.appendChild(div);
-  });
-  // community
-  const comPosts = $('#community-posts'); comPosts.innerHTML='';
-  (posts.community || []).slice().reverse().forEach(p=>{
-    const div = document.createElement('div'); div.className='post';
-    div.innerHTML = `<div>${p.text}</div><div class="small-muted" style="margin-top:6px;">작성자: ${p.by}</div>`;
-    comPosts.appendChild(div);
-  });
-}
-
-/* 상점 로드 */
-function loadProductsToUI(){
-  const products = JSON.parse(localStorage.getItem(LS_PRODUCTS) || '[]');
-  const list = $('#shop-list'); list.innerHTML='';
-  if(products.length===0){
-    list.innerHTML = `<div class="small-muted">등록된 상품이 없습니다.</div>`;
-    return;
-  }
-  products.slice().reverse().forEach((p, idx)=>{
-    const el = document.createElement('div'); el.className='product';
-    el.innerHTML = `<div style="display:flex;gap:12px;align-items:center;"><div style="width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,#e9fff0,#cfead6);display:flex;align-items:center;justify-content:center;font-weight:700;color:#0b5a30">${p.name[0]||'P'}</div>
-      <div><div style="font-weight:700;">${p.name}</div><div class="small-muted" style="font-size:13px">${p.desc||''}</div></div></div>
-      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;"><div style="font-weight:800;">${p.price}원</div><div><button data-idx="${products.length-1-idx}" class="buy-btn" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;background:linear-gradient(180deg,#2f9d5a,#1f7a44);color:white;">구매</button></div></div>`;
-    list.appendChild(el);
-  });
-  // attach buy handlers
-  document.querySelectorAll('.buy-btn').forEach(b=>{
-    b.addEventListener('click', (e)=>{
-      const idx = Number(e.target.dataset.idx);
-      attemptBuy(idx);
+    goSignup.addEventListener("click", () => {
+      section2.scrollIntoView({ behavior: "smooth" });
     });
-  });
-}
 
-/* 구매 시도 */
-function attemptBuy(productIndex){
-  const products = JSON.parse(localStorage.getItem(LS_PRODUCTS) || '[]');
-  const product = products[productIndex];
-  const user = JSON.parse(localStorage.getItem(LS_USER) || 'null');
-  if(!user){ alert('로그인이 필요합니다.'); goToSection(1); return; }
-  if(user.points >= product.price){
-    if(confirm(`${product.name}을(를) ${product.price}원에 구매하시겠습니까?`)){
-      user.points -= product.price;
-      localStorage.setItem(LS_USER, JSON.stringify(user));
-      initProfileUI(user);
-      alert('구매가 완료되었습니다.');
-    }
-  } else {
-    alert('포인트가 부족합니다.');
-  }
-}
-
-/* 모달 제어 */
-const modalBack = $('#modal-back');
-const modalTitle = $('#modal-title');
-const modalRows = $('#modal-rows');
-const modalOk = $('#modal-ok');
-const modalCancel = $('#modal-cancel');
-
-function openModal(title, fields, submitCallback){
-  modalTitle.textContent = title;
-  modalRows.innerHTML = '';
-  fields.forEach(f=>{
-    const wrapper = document.createElement('div');
-    wrapper.className = 'row';
-    if(f.type === 'textarea'){
-      const ta = document.createElement('textarea');
-      ta.placeholder = f.placeholder || '';
-      ta.style.padding = '10px'; ta.style.borderRadius='8px'; ta.style.border='1px solid #e9f1ea';
-      ta.rows = f.rows || 4;
-      ta.id = f.name;
-      wrapper.appendChild(ta);
-    } else {
-      const inp = document.createElement('input');
-      inp.type = f.type || 'text'; inp.placeholder = f.placeholder || '';
-      inp.id = f.name;
-      inp.style.padding='10px'; inp.style.borderRadius='8px'; inp.style.border='1px solid #e9f1ea';
-      wrapper.appendChild(inp);
-    }
-    modalRows.appendChild(wrapper);
-  });
-  modalBack.style.display = 'flex';
-  modalBack.setAttribute('aria-hidden','false');
-
-  // 이벤트 연결
-  modalOk.onclick = ()=>{
-    const values = {};
-    fields.forEach(f=>{
-      values[f.name] = document.getElementById(f.name).value;
+    // 입력 모두 완료 시 버튼 활성화
+    inputs.forEach(input => {
+      input.addEventListener("input", () => {
+        const allFilled = Array.from(inputs).every(i => i.value.trim() !== "");
+        if (allFilled) signupBtn.classList.add("active");
+        else signupBtn.classList.remove("active");
+      });
     });
-    submitCallback(values);
-    closeModal();
-  };
-  modalCancel.onclick = closeModal;
-  modalBack.onclick = (e)=>{ if(e.target===modalBack) closeModal(); };
-}
 
-function closeModal(){
-  modalBack.style.display = 'none';
-  modalBack.setAttribute('aria-hidden','true');
-  modalRows.innerHTML = '';
-}
+    // 회원가입
+    signupBtn.addEventListener("click", () => {
+      const name = document.getElementById("signup-name").value.trim();
+      const birth = document.getElementById("signup-birth").value.trim();
+      const id = document.getElementById("signup-id").value.trim();
+      const pw = document.getElementById("signup-pw").value.trim();
 
-/* Campaign 추가 (증명 글 올리면 포인트 +10) */
-$('#campaign-add').addEventListener('click', ()=>{
-  const user = JSON.parse(localStorage.getItem(LS_USER) || 'null');
-  if(!user){ alert('로그인이 필요합니다.'); goToSection(1); return; }
-  openModal('캠페인: 실천 내용 올리기', [
-    {name:'title', placeholder:'미션 제목(예: 공원 플로깅)'},
-    {name:'text', placeholder:'실천 내용(사진/동영상 설명)'}
-  ], (vals)=>{
-    const posts = JSON.parse(localStorage.getItem(LS_POSTS));
-    posts.campaign.push({title:vals.title, text:vals.text, by:user.id, at: new Date().toISOString()});
-    localStorage.setItem(LS_POSTS, JSON.stringify(posts));
-    // 포인트 +10
-    user.points = (user.points || 0) + 10;
-    user.posts = (user.posts || 0) + 1;
-    localStorage.setItem(LS_USER, JSON.stringify(user));
-    initProfileUI(user);
-    loadPostsToUI();
-    updateMissionCount();
-    alert('게시물 등록이 완료되었습니다. 포인트 +10이 적립되었습니다.');
-  });
-});
+      if (!name || !birth || !id || !pw) return;
 
-/* Main 추가 (증명 글) */
-$('#main-add').addEventListener('click', ()=>{
-  const user = JSON.parse(localStorage.getItem(LS_USER) || 'null');
-  if(!user){ alert('로그인이 필요합니다.'); goToSection(1); return; }
-  openModal('증명 글 올리기', [
-    {name:'title', placeholder:'제목'},
-    {name:'text', placeholder:'설명(촬영 혹은 활동을 설명)'}
-  ], (vals)=>{
-    const posts = JSON.parse(localStorage.getItem(LS_POSTS));
-    posts.main.push({title:vals.title, text:vals.text, by:user.id, at: new Date().toISOString()});
-    localStorage.setItem(LS_POSTS, JSON.stringify(posts));
-    // 포인트 +10
-    user.points = (user.points || 0) + 10;
-    user.posts = (user.posts || 0) + 1;
-    localStorage.setItem(LS_USER, JSON.stringify(user));
-    initProfileUI(user);
-    loadPostsToUI();
-    updateMissionCount();
-    alert('증명글이 올라갔습니다. 포인트 +10 적립.');
-  });
-});
+      users[id] = pw;
+      signupComplete.style.display = "block";
 
-/* Challenge 업로드 (숏폼 시뮬레이션) */
-$('#challenge-add').addEventListener('click', ()=>{
-  const user = JSON.parse(localStorage.getItem(LS_USER) || 'null');
-  if(!user){ alert('로그인이 필요합니다.'); goToSection(1); return; }
-  openModal('숏폼 업로드', [
-    {name:'title', placeholder:'영상 제목'},
-    {name:'desc', placeholder:'간단한 설명/해시태그(예: #플로깅 #환경)'}
-  ], (vals)=>{
-    const posts = JSON.parse(localStorage.getItem(LS_POSTS));
-    posts.challenge.push({title:vals.title, desc:vals.desc, by:user.id, at:new Date().toISOString()});
-    localStorage.setItem(LS_POSTS, JSON.stringify(posts));
-    loadPostsToUI();
-    alert('영상이 공유되었습니다. (시뮬레이션)');
-  });
-});
+      setTimeout(() => {
+        signupComplete.style.display = "none";
+        section1.scrollIntoView({ behavior: "smooth" });
+      }, 1500);
+    });
 
-/* Shop - 기업용 + 버튼 (상품 등록) */
-$('#shop-add').addEventListener('click', ()=>{
-  openModal('상품 등록 (기업용)', [
-    {name:'name', placeholder:'상품명'},
-    {name:'desc', placeholder:'짧은 설명'},
-    {name:'price', placeholder:'가격 (숫자만)'}
-  ], (vals)=>{
-    const pArr = JSON.parse(localStorage.getItem(LS_PRODUCTS) || '[]');
-    const newP = {name:vals.name, desc:vals.desc, price: Number(vals.price) || 0, at: new Date().toISOString()};
-    pArr.push(newP);
-    localStorage.setItem(LS_PRODUCTS, JSON.stringify(pArr));
-    loadProductsToUI();
-    alert('상품이 등록되었습니다.');
-  });
-});
-
-/* Community 등록 */
-$('#community-send').addEventListener('click', ()=>{
-  const txt = $('#community-input').value.trim();
-  const user = JSON.parse(localStorage.getItem(LS_USER) || 'null');
-  if(!txt) return;
-  const posts = JSON.parse(localStorage.getItem(LS_POSTS));
-  posts.community.push({text:txt, by: (user?user.id:'익명'), at:new Date().toISOString()});
-  localStorage.setItem(LS_POSTS, JSON.stringify(posts));
-  $('#community-input').value='';
-  loadPostsToUI();
-});
-
-/* 미션 참여자 수 계산: campaign + main 참여 수 합산 */
-function updateMissionCount(){
-  const posts = JSON.parse(localStorage.getItem(LS_POSTS));
-  const count = (posts.campaign.length || 0) + (posts.main.length || 0);
-  $('#mission-count').textContent = count;
-}
-
-/* 앱 초기화: 로드된 사용자 및 UI 렌더링 */
-function appInit(){
-  const user = JSON.parse(localStorage.getItem(LS_USER) || 'null');
-  if(user) initProfileUI(user);
-  loadPostsToUI();
-  loadProductsToUI();
-  updateMissionCount();
-}
-appInit();
-
-/* 구매/상품 동작은 동적으로 attach 되므로 초기화 후 다시 로드 */
-setInterval(()=>{
-  // 정기적으로 UI 동기화(간단)
-  const user = JSON.parse(localStorage.getItem(LS_USER) || 'null');
-  if(user) initProfileUI(user);
-  loadProductsToUI();
-}, 10000);
-
-/* 섹션3로 들어갔을 때 가로 프레임 가운데로 포커스 주기 (가운데 Main 창 보이게) */
-sec3.addEventListener('wheel', (e)=>{
-  // no-op; but allow normal scrolling within hframe
-});
-/* 사용자가 로그인하면 goToSection(3)에서 메인 초기화가 이미 이루어짐 */
-
-/* 페이지 로드시 첫 화면(로그인) 유지 */
-goToSection(1);
-
-/* 마지막: 디버그 콘솔로 간단 검증 메시지 */
-console.log('Green introduce app loaded. Local state keys:', LS_USER, LS_POSTS, LS_PRODUCTS);
-</script>
+    // 로그인
+    document.getElementById("login-pw").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        const id = loginId.value.trim();
+        const pw = loginPw.value.trim();
+        if (users[id] && users[id] === pw) {
+          userIdSpan.textContent = id;
+          section3.scrollIntoView({ behavior: "smooth" });
+        } else {
+          alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+        }
+      }
+    });
+  </script>
 </body>
-  </html>
+</html>

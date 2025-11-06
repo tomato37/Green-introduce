@@ -3,295 +3,357 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Green Introduce - Fixed</title>
+<title>Green Introduce - Expanded</title>
 <style>
-  :root{
-    --bg:#f0f7f0;
-    --card:#fff;
-    --muted:#9aa5a0;
-    --accent:#2f9d5a;
-  }
-  html,body{
-    height:100%;
-    margin:0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Helvetica Neue", Arial;
-    background:var(--bg);
-    overflow:hidden; /* 스크롤 차단: 섹션 이동은 JS로 제어 */
-  }
+:root {
+  --bg: #f0f7f0;
+  --card: #fff;
+  --muted: #9aa5a0;
+  --accent: #2f9d5a;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: "Noto Sans KR", sans-serif;
+  background: var(--bg);
+  overflow: hidden;
+}
+.section {
+  width: 100%;
+  height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity .35s ease;
+}
+.section.active { display: flex; }
 
-  .section {
-    width:100%;
-    height:100vh;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    transition:opacity .35s ease;
-  }
-  .section.active { display:flex; }
+/* 카드 */
+.card {
+  width: 520px;
+  max-width: 92%;
+  background: var(--card);
+  border-radius: 18px;
+  padding: 34px;
+  box-shadow: 0 10px 30px rgba(10,30,15,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e6efe7;
+  font-size: 15px;
+}
+input::placeholder { color: var(--muted); }
 
-  /* 공통 입력 스타일 */
-  .card{
-    width:520px;
-    max-width:92%;
-    background:var(--card);
-    border-radius:18px;
-    padding:34px;
-    box-shadow: 0 10px 30px rgba(10,30,15,0.06);
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    align-items:center;
-  }
-  h1{ margin:0; font-size:34px; color:#0b0b0b; transform:translateY(-6px); }
-  input{
-    width:100%;
-    padding:12px 14px;
-    border-radius:10px;
-    border:1px solid #e6efe7;
-    outline:none;
-    font-size:15px;
-  }
-  input::placeholder{ color:var(--muted); }
+.muted-link {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(180deg,#2f9d5a,#1f7a44);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
 
-  .muted-link{
-    color:var(--muted);
-    font-size:14px;
-    cursor:pointer;
-    user-select:none;
-    background:none;
-    border:none;
-  }
-  .muted-link:focus{ outline:2px solid rgba(47,157,90,0.15); border-radius:8px; }
+/* 메인(3섹션) */
+.topbar {
+  width: calc(100% - 80px);
+  max-width: 1200px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 260px);
+  grid-template-rows: repeat(3, 160px);
+  gap: 16px;
+}
+.tile {
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(10,30,10,0.04);
+}
 
-  /* small text */
-  .small-muted{ color:var(--muted); font-size:13px; text-align:center; }
+/* 새로 뜨는 세부 섹션 */
+.subsection {
+  background: var(--card);
+  width: 90%;
+  max-width: 700px;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(10,30,15,0.06);
+  overflow-y: auto;
+  height: 80vh;
+}
+.backbtn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-weight: bold;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
 
-  /* top / main UI (section3) */
-  .topbar{
-    width:calc(100% - 80px);
-    max-width:1200px;
-    background:rgba(255,255,255,0.95);
-    border-radius:12px;
-    padding:12px 18px;
-    box-shadow:0 8px 24px rgba(10,30,10,0.04);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:24px;
-  }
-  .hframe{
-    width:calc(100% - 80px);
-    max-width:1200px;
-    background:linear-gradient(180deg,#ffffff,#f7fff7);
-    border-radius:12px;
-    padding:18px;
-    box-shadow:0 8px 24px rgba(10,30,10,0.04);
-  }
-
-  /* 버튼 스타일 */
-  .btn{
-    padding:10px 14px;
-    border-radius:10px;
-    border:none;
-    background:linear-gradient(180deg,#2f9d5a,#1f7a44);
-    color:white;
-    cursor:pointer;
-    font-weight:600;
-  }
-  .btn.ghost{
-    background:transparent;
-    color:var(--muted);
-    border:1px solid #eef6ef;
-  }
-
-  /* simple responsive */
-  @media (max-width:640px){
-    .card{ padding:20px; }
-    input{ font-size:14px; }
-  }
+/* 상품카드 */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
+  gap: 12px;
+}
+.product {
+  border: 1px solid #e6efe7;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+.product img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
 </style>
 </head>
 <body>
-  <!-- SECTION 1: 로그인 -->
-  <section id="sec1" class="section active" aria-label="로그인 섹션">
-    <div class="card" role="region" aria-labelledby="title1">
-      <h1 id="title1">Green introduce</h1>
-      <input id="login-id" type="text" placeholder="아이디" autocomplete="username" />
-      <input id="login-pw" type="password" placeholder="비번" autocomplete="current-password" />
-      <!-- 변경: a -> button (명확한 클릭 이벤트 보장) -->
-      <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-        <button id="btn-go-signup" class="muted-link" aria-label="회원가입으로 이동">회원가입</button>
-        <button id="btn-login" class="btn">로그인</button>
-      </div>
-      <div style="margin-top:10px;"><div class="small-muted">생태·환경을 위한 아이디어와 활동을 공유하는 공간</div></div>
-    </div>
-  </section>
 
-  <!-- SECTION 2: 회원가입 -->
-  <section id="sec2" class="section" aria-label="회원가입 섹션">
-    <div class="card" role="region" aria-labelledby="title2">
-      <h1 id="title2" style="font-size:24px;color:#0b6b3a;">회원가입</h1>
-      <input id="su-name" type="text" placeholder="이름" />
-      <!-- ✅ placeholder가 '생년월일'로 확실히 보이도록 설정 -->
-      <input id="su-dob" type="text" placeholder="생년월일" />
-      <input id="su-id" type="text" placeholder="아이디" />
-      <input id="su-pw" type="password" placeholder="비번" />
-      <div style="width:100%; display:flex; justify-content:center; margin-top:6px;">
-        <button id="btn-do-signup" class="muted-link" aria-label="회원가입">회원가입</button>
-      </div>
-      <div style="margin-top:8px;"><div class="small-muted">가입 후 로그인하면 바로 활동할 수 있습니다.</div></div>
+<!-- SECTION 1 -->
+<section id="sec1" class="section active">
+  <div class="card">
+    <h1>Green introduce</h1>
+    <input id="login-id" type="text" placeholder="아이디">
+    <input id="login-pw" type="password" placeholder="비번">
+    <div style="width:100%; display:flex; justify-content:space-between;">
+      <button id="btn-go-signup" class="muted-link">회원가입</button>
+      <button id="btn-login" class="btn">로그인</button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SECTION 3: 메인 -->
-  <section id="sec3" class="section" aria-label="메인 섹션">
-    <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
-      <div class="topbar" role="region" aria-label="상태바">
-        <div id="profile-area">비회원</div>
-        <div id="stats-area" style="display:flex; gap:12px;">
-          <div id="points">포인트: 0원</div>
-          <div id="days">이용일수: 0일</div>
-        </div>
-      </div>
+<!-- SECTION 2 -->
+<section id="sec2" class="section">
+  <div class="card">
+    <h2>회원가입</h2>
+    <input id="su-name" type="text" placeholder="이름">
+    <!-- ✅ 1. 생년월일 datepicker -->
+    <input id="su-dob" type="date" placeholder="생년월일">
+    <input id="su-id" type="text" placeholder="아이디">
+    <input id="su-pw" type="password" placeholder="비밀번호">
+    <button id="btn-do-signup" class="muted-link">회원가입</button>
+  </div>
+</section>
 
-      <div class="hframe" role="main">
-        <div style="display:flex; gap:16px; flex-wrap:wrap;">
-          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Community</div>
-          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Campaign</div>
-          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Main (오늘의 미션)</div>
-          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Shop</div>
-          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Challenge</div>
-        </div>
-      </div>
+<!-- SECTION 3 -->
+<section id="sec3" class="section">
+  <div class="topbar">
+    <div id="profile-area">비회원</div>
+    <div id="stats-area">
+      <span id="points">포인트: 0원</span> | <span id="days">이용일수: 0일</span>
     </div>
-  </section>
+  </div>
+  <div class="grid">
+    <!-- ✅ 2~3. 위치 변경 + Main 글자 수정 -->
+    <div class="tile" id="tile-main" style="grid-column:1;grid-row:1;">Main</div>
+    <div class="tile" id="tile-challenge" style="grid-column:2;grid-row:1;">Challenge</div>
+    <div class="tile" id="tile-community" style="grid-column:2;grid-row:2;">Community</div>
+    <div class="tile" id="tile-shop" style="grid-column:1;grid-row:3;">Shop</div>
+    <div class="tile" id="tile-campaign" style="grid-column:2;grid-row:3;">Campaign</div>
+  </div>
+</section>
+
+<!-- 각 메뉴 클릭 시 열릴 섹션들 -->
+<section id="community-sec" class="section">
+  <div class="subsection">
+    <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
+    <h2>Community</h2>
+    <p>문의사항, 의견 게시판</p>
+    <p>포인트로 생태/환경 보호 단체에 후원할 수 있습니다.</p>
+  </div>
+</section>
+
+<section id="main-sec" class="section">
+  <div class="subsection">
+    <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
+    <h2>오늘의 미션</h2>
+    <p>참여자 수: <strong>123명</strong></p>
+    <hr>
+    <p style="margin-top:50px;">(로고, 광고 위치)</p>
+  </div>
+</section>
+
+<section id="challenge-sec" class="section">
+  <div class="subsection">
+    <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
+    <h2>Challenge</h2>
+    <p>생태·환경 관련 숏폼 / 동영상</p>
+    <button id="btn-add-challenge" class="btn">+ 업로드</button>
+  </div>
+</section>
+
+<section id="challenge-upload-sec" class="section">
+  <div class="subsection">
+    <button class="backbtn" onclick="showSection('challenge')">← 돌아가기</button>
+    <h2>영상 업로드</h2>
+    <input type="text" placeholder="미디어 제목">
+    <input type="text" placeholder="#해시태그">
+    <textarea style="width:100%;height:100px;" placeholder="내용/설명"></textarea>
+    <button id="btn-post-challenge" class="btn">게시하기</button>
+  </div>
+</section>
+
+<section id="shop-sec" class="section">
+  <div class="subsection">
+    <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
+    <h2>Shop</h2>
+    <p>친환경제품을 포인트로 구매할 수 있습니다.</p>
+    <div class="products" id="shop-products"></div>
+  </div>
+</section>
+
+<section id="shop-detail-sec" class="section">
+  <div class="subsection" id="shop-detail-content"></div>
+</section>
+
+<section id="shop-buy-sec" class="section">
+  <div class="subsection">
+    <button class="backbtn" onclick="showSection('shop')">← 돌아가기</button>
+    <h2>구매창</h2>
+    <input placeholder="구매 개수">
+    <input placeholder="이름">
+    <input placeholder="계좌번호">
+    <input placeholder="카드 비밀번호">
+    <input id="auth-code" placeholder="인증번호 (2초 뒤 표시)">
+    <p id="code-area"></p>
+  </div>
+</section>
+
+<section id="campaign-sec" class="section">
+  <div class="subsection">
+    <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
+    <h2>Campaign</h2>
+    <p>+ 버튼을 눌러 환경 문제 해결 미션을 제시하거나 사진/영상을 공유할 수 있습니다.</p>
+    <p>게시물 1개당 3포인트 적립됩니다.</p>
+    <button class="btn">+ 미션 올리기</button>
+  </div>
+</section>
 
 <script>
-document.addEventListener('DOMContentLoaded', ()=> {
-  // 섹션 엘리먼트
-  const sec1 = document.getElementById('sec1');
-  const sec2 = document.getElementById('sec2');
-  const sec3 = document.getElementById('sec3');
+let registeredUser = null;
+const sections = {
+  1: document.getElementById("sec1"),
+  2: document.getElementById("sec2"),
+  3: document.getElementById("sec3"),
+  community: document.getElementById("community-sec"),
+  main: document.getElementById("main-sec"),
+  challenge: document.getElementById("challenge-sec"),
+  challengeUpload: document.getElementById("challenge-upload-sec"),
+  shop: document.getElementById("shop-sec"),
+  shopDetail: document.getElementById("shop-detail-sec"),
+  shopBuy: document.getElementById("shop-buy-sec"),
+  campaign: document.getElementById("campaign-sec")
+};
 
-  // 버튼들
-  const btnGoSignup = document.getElementById('btn-go-signup');
-  const btnLogin = document.getElementById('btn-login');
-  const btnDoSignup = document.getElementById('btn-do-signup');
+function showSection(id){
+  for(const key in sections){ sections[key].classList.remove('active'); }
+  sections[id].classList.add('active');
+}
 
-  // 입력들
-  const loginId = document.getElementById('login-id');
-  const loginPw = document.getElementById('login-pw');
-  const suName = document.getElementById('su-name');
-  const suDob = document.getElementById('su-dob');
-  const suId = document.getElementById('su-id');
-  const suPw = document.getElementById('su-pw');
-
-  // 상태(한 유저만 시뮬레이션)
-  let registeredUser = null;
-
-  // 섹션 표시 헬퍼
-  function showSection(id){
-    console.log('showSection ->', id);
-    sec1.classList.remove('active');
-    sec2.classList.remove('active');
-    sec3.classList.remove('active');
-    if(id === 1) sec1.classList.add('active');
-    if(id === 2) sec2.classList.add('active');
-    if(id === 3) sec3.classList.add('active');
-  }
-
-  // 1) 회원가입 버튼(텍스트) 클릭 시 -> 2번 섹션으로 이동 (명확하게)
-  btnGoSignup.addEventListener('click', (e) => {
-    e.preventDefault && e.preventDefault();
-    console.log('회원가입 버튼 클릭 - 이동시도');
-    showSection(2);
-    // 포커스 UX: 생년월일 칸에 커서 두기(placeholder가 보이는지 확인 가능)
-    setTimeout(()=>{ suDob.focus(); }, 120);
-  });
-
-  // 2) 회원가입 처리: 모든 칸 입력 시 등록 가능
-  function canSignup(){
-    return suName.value.trim() && suDob.value.trim() && suId.value.trim() && suPw.value.trim();
-  }
-  // 시각적 활성화(선택적)
-  [suName, suDob, suId, suPw].forEach(el=>{
-    el.addEventListener('input', ()=>{
-      if(canSignup()){
-        btnDoSignup.style.color = 'var(--accent)';
-        btnDoSignup.style.fontWeight = '700';
-        btnDoSignup.style.cursor = 'pointer';
-      } else {
-        btnDoSignup.style.color = '';
-        btnDoSignup.style.fontWeight = '';
-        btnDoSignup.style.cursor = '';
-      }
-    });
-  });
-
-  btnDoSignup.addEventListener('click', (e)=>{
-    e.preventDefault && e.preventDefault();
-    if(!canSignup()){
-      alert('모든 항목을 입력해 주세요.');
-      return;
-    }
-    // 저장(간단 시뮬레이션)
-    registeredUser = {
-      name: suName.value.trim(),
-      dob: suDob.value.trim(),
-      id: suId.value.trim(),
-      pw: suPw.value
-    };
-    console.log('회원가입 완료, 저장된 유저:', registeredUser);
-    alert('회원가입이 완료되었습니다.');
-    // 입력창 초기화 보안
-    suPw.value = '';
-    // 다시 로그인 페이지로 이동
-    showSection(1);
-    loginId.value = registeredUser.id; // 편의상 아이디 채워줌
-    loginPw.value = '';
-    loginPw.focus();
-  });
-
-  // 3) 로그인 처리 -> 올바르면 3번 섹션으로 이동
-  btnLogin.addEventListener('click', (e)=>{
-    e.preventDefault && e.preventDefault();
-    attemptLogin();
-  });
-  loginPw.addEventListener('keypress', (ev)=>{
-    if(ev.key === 'Enter') attemptLogin();
-  });
-
-  function attemptLogin(){
-    const id = loginId.value.trim();
-    const pw = loginPw.value;
-    if(!registeredUser){
-      alert('등록된 계정이 없습니다. 회원가입 해주세요.');
-      return;
-    }
-    if(id === registeredUser.id && pw === registeredUser.pw){
-      // 로그인 성공: 3번 섹션으로 이동
-      console.log('로그인 성공 -> 메인으로 이동');
-      showSection(3);
-      // 프로필 표시 업데이트
-      const profileArea = document.getElementById('profile-area');
-      const pointsArea = document.getElementById('points');
-      const daysArea = document.getElementById('days');
-      profileArea.textContent = `${registeredUser.name} (@${registeredUser.id})`;
-      // 단순 초기값
-      pointsArea.textContent = '포인트: 0원';
-      const created = new Date().toISOString();
-      daysArea.textContent = '이용일수: 1일';
-    } else {
-      alert('아이디 또는 비밀번호가 올바르지 않습니다.');
-    }
-  }
-
-  // 초기 섹션 1 표시(확실히)
+/* 로그인/회원가입 */
+document.getElementById("btn-go-signup").onclick = ()=> showSection(2);
+document.getElementById("btn-do-signup").onclick = ()=>{
+  const id = document.getElementById("su-id").value;
+  const pw = document.getElementById("su-pw").value;
+  registeredUser = {id, pw, name: document.getElementById("su-name").value};
+  alert("회원가입 완료!");
   showSection(1);
+};
+document.getElementById("btn-login").onclick = ()=>{
+  if(registeredUser &&
+     registeredUser.id === document.getElementById("login-id").value &&
+     registeredUser.pw === document.getElementById("login-pw").value){
+      showSection(3);
+  } else alert("아이디 또는 비밀번호가 잘못되었습니다.");
+};
 
-  // 개발자용 로그: 확실히 이벤트 연결되었는지 콘솔에 표시
-  console.log('Event listeners attached: btnGoSignup, btnDoSignup, btnLogin');
+/* 타일 클릭 → 각 섹션 열기 */
+document.getElementById("tile-community").onclick = ()=> showSection("community");
+document.getElementById("tile-main").onclick = ()=> showSection("main");
+document.getElementById("tile-challenge").onclick = ()=> showSection("challenge");
+document.getElementById("tile-shop").onclick = ()=> showSection("shop");
+document.getElementById("tile-campaign").onclick = ()=> showSection("campaign");
+
+/* Challenge + 버튼 */
+document.getElementById("btn-add-challenge").onclick = ()=> showSection("challengeUpload");
+document.getElementById("btn-post-challenge").onclick = ()=>{
+  alert("게시 완료!");
+  showSection("challenge");
+};
+
+/* SHOP 데이터 */
+const products = [
+  {name:"대나무 칫솔", price:3000, img:"https://picsum.photos/200?1"},
+  {name:"리필 샴푸", price:12000, img:"https://picsum.photos/200?2"},
+  {name:"친환경 장바구니", price:8000, img:"https://picsum.photos/200?3"},
+  {name:"재활용 텀블러", price:10000, img:"https://picsum.photos/200?4"},
+  {name:"유기농 비누", price:6000, img:"https://picsum.photos/200?5"},
+  {name:"무플라스틱 컵", price:7000, img:"https://picsum.photos/200?6"},
+  {name:"에코백", price:5000, img:"https://picsum.photos/200?7"},
+  {name:"천연 수세미", price:4000, img:"https://picsum.photos/200?8"},
+  {name:"재활용 노트", price:2000, img:"https://picsum.photos/200?9"},
+  {name:"친환경 빨대 세트", price:3500, img:"https://picsum.photos/200?10"},
+];
+const shopContainer = document.getElementById("shop-products");
+products.forEach((p,i)=>{
+  const div = document.createElement("div");
+  div.className="product";
+  div.innerHTML=`<img src="${p.img}"><h4>${p.name}</h4><p>${p.price}P</p>`;
+  div.onclick=()=>{
+    document.getElementById("shop-detail-content").innerHTML=`
+      <button class='backbtn' onclick='showSection("shop")'>← 돌아가기</button>
+      <h2>${p.name}</h2>
+      <img src='${p.img}' style='width:100%;border-radius:8px;'>
+      <p>가격: ${p.price}P</p>
+      <button class='btn' onclick='showSection("shopBuy")'>구매하기</button>
+    `;
+    showSection("shopDetail");
+  };
+  shopContainer.appendChild(div);
+});
+
+/* 구매창 인증번호 표시 */
+const codeArea = document.getElementById("code-area");
+document.getElementById("shop-buy-sec").addEventListener("transitionend", ()=>{
+  // not reliable; use timeout on enter
+});
+sections.shopBuy.addEventListener("transitionstart", ()=>{
+  if(sections.shopBuy.classList.contains("active")){
+    setTimeout(()=>{
+      const code = Math.floor(1000 + Math.random()*9000);
+      codeArea.textContent = "인증번호: "+code;
+    },2000);
+  }
 });
 </script>
 </body>

@@ -1,290 +1,233 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Green Introduce</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Pretendard', sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Introduce</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', sans-serif;
+  }
+  body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* 스크롤 비활성화 */
+    background-color: #f0f7f0;
+  }
 
-    html, body {
-      height: 100%;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
+  .section {
+    width: 100%;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 0.6s ease;
+  }
 
-    section {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.5s ease;
-    }
+  .active {
+    display: flex;
+  }
 
-    /* 공통 입력 스타일 */
-    input {
-      width: 250px;
-      padding: 12px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      outline: none;
-      font-size: 14px;
-    }
+  /* 1️⃣ 로그인 섹션 */
+  #section1 h1 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    color: black;
+  }
+  input {
+    width: 280px;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    text-align: center;
+  }
+  input::placeholder {
+    color: #aaa;
+  }
+  .small-link {
+    color: gray;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 10px;
+  }
 
-    input::placeholder {
-      color: #aaa;
-    }
+  /* 2️⃣ 회원가입 섹션 */
+  #section2 {
+    background-color: #f4faf4;
+  }
+  #section2 h2 {
+    font-size: 1.8rem;
+    color: #1e4620;
+    margin-bottom: 25px;
+  }
+  .signup-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .signup-btn {
+    color: gray;
+    margin-top: 15px;
+    cursor: not-allowed;
+    font-size: 1rem;
+  }
+  .signup-btn.active {
+    color: #1e4620;
+    cursor: pointer;
+    font-weight: bold;
+  }
 
-    a {
-      color: gray;
-      cursor: pointer;
-      margin-top: 10px;
-      font-size: 14px;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* 1️⃣ 첫 번째 섹션 (로그인) */
-    #section1 {
-      background: #f6f6f6;
-    }
-
-    #title {
-      font-size: 2em;
-      font-weight: bold;
-      color: #000;
-      margin-bottom: 40px;
-      margin-top: -80px;
-    }
-
-    /* 2️⃣ 두 번째 섹션 (회원가입) */
-    #section2 {
-      background: #e8f5e9;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #signup-complete {
-      display: none;
-      color: green;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    /* 회원가입 버튼 */
-    #signup-btn {
-      color: gray;
-      margin-top: 12px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    #signup-btn.active {
-      color: #2e7d32;
-      font-weight: bold;
-    }
-
-    /* 3️⃣ 세 번째 섹션 (메인 페이지) */
-    #section3 {
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      overflow-x: scroll;
-      scroll-snap-type: x mandatory;
-      flex-wrap: nowrap;
-    }
-
-    .main-container {
-      display: flex;
-      flex-direction: row;
-      width: 500vw;
-      height: 100%;
-      scroll-snap-align: start;
-    }
-
-    .page {
-      width: 100vw;
-      height: 100vh;
-      flex-shrink: 0;
-      scroll-snap-align: start;
-      padding: 40px;
-    }
-
-    .page:nth-child(1) { background: #e0f2f1; } /* 커뮤니티 */
-    .page:nth-child(2) { background: #c8e6c9; } /* 캠페인 */
-    .page:nth-child(3) { background: #a5d6a7; } /* 메인 */
-    .page:nth-child(4) { background: #81c784; } /* 상점 */
-    .page:nth-child(5) { background: #66bb6a; } /* 챌린지 */
-
-    .top-bar {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(6px);
-      font-size: 14px;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      background: #fff;
-      padding: 12px 0;
-      border-top: 1px solid #ccc;
-      font-weight: bold;
-    }
-
-    .plus-btn {
-      position: absolute;
-      bottom: 80px;
-      right: 30px;
-      background: #43a047;
-      color: #fff;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 28px;
-      cursor: pointer;
-    }
-  </style>
+  /* 3️⃣ 메인 섹션 */
+  #section3 {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .top-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  .bottom-tabs {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+  }
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .tab:hover {
+    background-color: #e6f4e6;
+  }
+</style>
 </head>
 <body>
+
   <!-- 1️⃣ 로그인 섹션 -->
-  <section id="section1">
-    <div id="title">Green introduce</div>
-    <input type="text" id="login-id" placeholder="아이디">
-    <input type="password" id="login-pw" placeholder="비번">
-    <a id="go-signup">회원가입</a>
+  <section id="section1" class="section active">
+    <h1>Green Introduce</h1>
+    <input type="text" id="loginId" placeholder="아이디">
+    <input type="password" id="loginPw" placeholder="비번">
+    <div class="small-link" id="goSignup">회원가입</div>
   </section>
 
   <!-- 2️⃣ 회원가입 섹션 -->
-  <section id="section2">
-    <input type="text" id="signup-name" placeholder="이름">
-    <input type="text" id="signup-birth" placeholder="생년월일"> <!-- 수정된 부분 -->
-    <input type="text" id="signup-id" placeholder="아이디">
-    <input type="password" id="signup-pw" placeholder="비번">
-    <div id="signup-btn">회원가입</div>
-    <div id="signup-complete">회원가입이 완료되었습니다!</div>
+  <section id="section2" class="section">
+    <h2>회원가입</h2>
+    <div class="signup-box">
+      <input type="text" id="signupName" placeholder="이름">
+      <input type="text" id="signupBirth" placeholder="생년월일">
+      <input type="text" id="signupId" placeholder="아이디">
+      <input type="password" id="signupPw" placeholder="비번">
+      <div id="signupBtn" class="signup-btn">회원가입</div>
+      <p style="margin-top:10px; color:gray; font-size:0.9rem;">가입 후 로그인하면 바로 활동할 수 있습니다.</p>
+    </div>
   </section>
 
   <!-- 3️⃣ 메인 섹션 -->
-  <section id="section3">
-    <div class="top-bar">
-      <div id="profile">프로필: <span id="user-id"></span></div>
-      <div id="points">포인트: 0</div>
-      <div id="days">이용 1일차</div>
+  <section id="section3" class="section">
+    <div class="top-info">
+      <div id="profileInfo">프로필: 사용자</div>
+      <div id="daysCount">이용 1일차</div>
+      <div id="pointInfo">포인트: 0원</div>
     </div>
 
-    <div class="main-container">
-      <div class="page">커뮤니티: 자유롭게 의견 및 후원 문의 가능</div>
-      <div class="page">캠페인: 미션을 실천하고 사진/영상을 올리면 포인트 +10</div>
-      <div class="page">
-        <h2>오늘의 미션 & 참여자수</h2>
-        <p>로고, 문의, 마케팅 광고 등 표시</p>
-      </div>
-      <div class="page">상점: 친환경 상품 구매 / 기업은 상품 등록 및 기부 가능</div>
-      <div class="page">
-        챌린지: 환경 숏폼 시청 및 + 버튼으로 영상 업로드
-        <div class="plus-btn">+</div>
+    <div style="flex:1; display:flex; justify-content:center; align-items:center;">
+      <div id="mainContent">
+        <h2>오늘의 미션</h2>
+        <p>텀블러 사용 인증하기</p>
+        <p>참여자수: 125명</p>
+        <p>문의: support@green.com</p>
+        <p style="margin-top:10px; color:gray;">친환경 기업 광고 영역</p>
       </div>
     </div>
 
-    <div class="bottom-nav">
-      <div>커뮤니티</div>
-      <div>캠페인</div>
-      <div>Main</div>
-      <div>상점</div>
-      <div>챌린지</div>
+    <div class="bottom-tabs">
+      <div class="tab">커뮤니티</div>
+      <div class="tab">캠페인</div>
+      <div class="tab">메인</div>
+      <div class="tab">상점</div>
+      <div class="tab">챌린지</div>
     </div>
   </section>
 
-  <script>
-    const goSignup = document.getElementById("go-signup");
-    const signupBtn = document.getElementById("signup-btn");
-    const signupComplete = document.getElementById("signup-complete");
-    const section1 = document.getElementById("section1");
-    const section2 = document.getElementById("section2");
-    const section3 = document.getElementById("section3");
+<script>
+  const section1 = document.getElementById('section1');
+  const section2 = document.getElementById('section2');
+  const section3 = document.getElementById('section3');
 
-    const inputs = document.querySelectorAll("#section2 input");
-    const loginId = document.getElementById("login-id");
-    const loginPw = document.getElementById("login-pw");
-    const userIdSpan = document.getElementById("user-id");
+  const goSignup = document.getElementById('goSignup');
+  const signupBtn = document.getElementById('signupBtn');
 
-    let users = {};
-    let points = 0;
+  let userData = {};
 
-    goSignup.addEventListener("click", () => {
-      section2.scrollIntoView({ behavior: "smooth" });
+  // 회원가입 버튼 활성화 확인
+  const inputs = document.querySelectorAll('#signupName, #signupBirth, #signupId, #signupPw');
+  inputs.forEach(input => {
+    input.addEventListener('input', () => {
+      const allFilled = Array.from(inputs).every(i => i.value.trim() !== "");
+      if (allFilled) signupBtn.classList.add('active');
+      else signupBtn.classList.remove('active');
     });
+  });
 
-    // 입력 모두 완료 시 버튼 활성화
-    inputs.forEach(input => {
-      input.addEventListener("input", () => {
-        const allFilled = Array.from(inputs).every(i => i.value.trim() !== "");
-        if (allFilled) signupBtn.classList.add("active");
-        else signupBtn.classList.remove("active");
-      });
-    });
+  // 회원가입 페이지 이동
+  goSignup.addEventListener('click', () => {
+ 섹션1.classList.remove('활성');
+ 섹션2.classList.add('활성');
+ });
 
-    // 회원가입
-    signupBtn.addEventListener("click", () => {
-      const name = document.getElementById("signup-name").value.trim();
-      const birth = document.getElementById("signup-birth").value.trim();
-      const id = document.getElementById("signup-id").value.trim();
-      const pw = document.getElementById("signup-pw").value.trim();
+  // 회원가입 완료
+ signupBtn.addEventListener('클릭', () => {
+ (!signupBtn.classList.containment('active')가 반환되는 경우;
 
-      if (!name || !birth || !id || !pw) return;
+ 사용자 데이터 = {
+ 이름: document.getElementById('signupName').가치,
+ 출생: document.getElementById('signupBirth') 값,
+ ID: document.getElementById('signupId').가치,
+ pw: document.getElementById('signupPw') 값
+ }
 
-      users[id] = pw;
-      signupComplete.style.display = "block";
+ alert("회원가입이 완료되었습니다!");
+    // 다시 로그인 페이지로
+ 섹션2.classList.remove('활성');
+ 섹션1.classList.add('활성');
+ });
 
-      setTimeout(() => {
-        signupComplete.style.display = "none";
-        section1.scrollIntoView({ behavior: "smooth" });
-      }, 1500);
-    });
+  // 로그인 시도
+ document.getElementById('loginPw').addEventListener('키 누름', (e) => {
+ 만약 (예: 키 === '입력') 로그인 확인();
+ });
 
-    // 로그인
-    document.getElementById("login-pw").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        const id = loginId.value.trim();
-        const pw = loginPw.value.trim();
-        if (users[id] && users[id] === pw) {
-          userIdSpan.textContent = id;
-          section3.scrollIntoView({ behavior: "smooth" });
-        } else {
-          alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-        }
-      }
-    });
-  </script>
-</body>
-</html>
+  기능. 로그인 확인() {
+ const id = document.getElementById('loginId').가치;
+ const pw = document.getElementById('loginPw') 값;
+ 만약 (ID === userData.id & pw === userData.pw ) {
+ 섹션1.classList.remove('활성');
+ 섹션3.classList.add('활성');
+ document.getElementById('프로필')정보').텍스트 내용 = '프로필: ${userData.name }';
+    } 또 다른 {
+ alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+    }
+  }
+</대본>
+
+</몸>
+</HTML>

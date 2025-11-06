@@ -258,18 +258,19 @@ input {
   </div>
 </section>
 
-<!-- Campaign Section -->
+<!-- ✅ Campaign Section -->
 <section id="campaign-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
     <h2>Campaign</h2>
-    <button class="btn">+ 미션 올리기</button>
+    <button class="btn">+ 게시물 올리기</button>
   </div>
 </section>
 
 <script>
 let registeredUser = null;
-let userPoints = 10000; // 기본 포인트 예시
+/* ✅ 초기 포인트 300으로 변경 */
+let userPoints = 300; 
 let selectedProduct = null;
 
 const sections = {

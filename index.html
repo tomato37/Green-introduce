@@ -14,7 +14,7 @@
   body, html {
     width: 100%;
     height: 100%;
-    overflow: hidden; /* 스크롤 비활성화 */
+    overflow: hidden; /* 스크롤 차단 */
     background-color: #f0f7f0;
   }
 
@@ -178,7 +178,13 @@
 
   let userData = {};
 
-  // 회원가입 버튼 활성화 확인
+  // ✅ 회원가입 페이지로 이동
+  goSignup.addEventListener('click', () => {
+    section1.classList.remove('active');
+    section2.classList.add('active');
+  });
+
+  // 입력 감지하여 버튼 활성화
   const inputs = document.querySelectorAll('#signupName, #signupBirth, #signupId, #signupPw');
   inputs.forEach(input => {
     input.addEventListener('input', () => {
@@ -188,46 +194,40 @@
     });
   });
 
-  // 회원가입 페이지 이동
-  goSignup.addEventListener('click', () => {
- 섹션1.classList.remove('활성');
- 섹션2.classList.add('활성');
- });
+  // ✅ 회원가입 완료 처리
+  signupBtn.addEventListener('click', () => {
+    if (!signupBtn.classList.contains('active')) return;
 
-  // 회원가입 완료
- signupBtn.addEventListener('클릭', () => {
- (!signupBtn.classList.containment('active')가 반환되는 경우;
+    userData = {
+      name: document.getElementById('signupName').value,
+      birth: document.getElementById('signupBirth').value,
+      id: document.getElementById('signupId').value,
+      pw: document.getElementById('signupPw').value
+    };
 
- 사용자 데이터 = {
- 이름: document.getElementById('signupName').가치,
- 출생: document.getElementById('signupBirth') 값,
- ID: document.getElementById('signupId').가치,
- pw: document.getElementById('signupPw') 값
- }
-
- alert("회원가입이 완료되었습니다!");
+    alert("회원가입이 완료되었습니다!");
     // 다시 로그인 페이지로
- 섹션2.classList.remove('활성');
- 섹션1.classList.add('활성');
- });
+    section2.classList.remove('active');
+    section1.classList.add('active');
+  });
 
-  // 로그인 시도
- document.getElementById('loginPw').addEventListener('키 누름', (e) => {
- 만약 (예: 키 === '입력') 로그인 확인();
- });
+  // ✅ 로그인 시 3번째 섹션으로 이동
+  document.getElementById('loginPw').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') loginCheck();
+  });
 
-  기능. 로그인 확인() {
- const id = document.getElementById('loginId').가치;
- const pw = document.getElementById('loginPw') 값;
- 만약 (ID === userData.id & pw === userData.pw ) {
- 섹션1.classList.remove('활성');
- 섹션3.classList.add('활성');
- document.getElementById('프로필')정보').텍스트 내용 = '프로필: ${userData.name }';
-    } 또 다른 {
- alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+  function loginCheck() {
+    const id = document.getElementById('loginId').value;
+    const pw = document.getElementById('loginPw').value;
+    if (id === userData.id && pw === userData.pw) {
+      section1.classList.remove('active');
+      section3.classList.add('active');
+      document.getElementById('profileInfo').textContent = `프로필: ${userData.name}`;
+    } else {
+      alert("아이디 또는 비밀번호가 올바르지 않습니다.");
     }
   }
-</대본>
+</script>
 
-</몸>
-</HTML>
+</body>
+</html>

@@ -103,73 +103,6 @@
     <div id="logo">🌿 GreenIntroduce</div>
   </section>
 
-  <!-- Main -->
-  <div id="main-content" class="content-section">
-    <h2>오늘의 미션</h2>
-    <ul>
-      <li>일회용품 줄이기</li>
-      <li>분리배출 철저히 하기</li>
-      <li>에너지 절약하기</li>
-      <li>대중교통/자전거 이용하기</li>
-      <li>친환경 소비 실천하기</li>
-    </ul>
-    <h3 style="margin-top:20px;">🌱 EcoFriend 광고</h3>
-    <p>친환경 스타트업 EcoFriend가 만든 <strong>대나무 칫솔</strong>을 사용해보세요.<br>지구를 위한 작은 습관, EcoFriend와 함께 🌏</p>
-  </div>
-
-  <!-- Challenge -->
-  <div id="challenge-content" class="content-section">
-    <h2>생태·환경 관련 숏츠 / 동영상</h2>
-    <div class="photo-grid">
-      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6">
-      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b">
-      <img src="https://images.unsplash.com/photo-1503264116251-35a269479413">
-      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
-      <img src="https://images.unsplash.com/photo-1517511620798-cec17d428bc0">
-      <img src="https://images.unsplash.com/photo-1496483648148-47c686dc86a8">
-      <img src="https://images.unsplash.com/photo-1473187983305-f615310e7daa">
-      <img src="https://images.unsplash.com/photo-1503264116251-35a269479413">
-      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e">
-    </div>
-  </div>
-
-  <!-- Community -->
-  <div id="community-content" class="content-section">
-    <h2>문의사항</h2>
-    <textarea rows="4" style="width:100%;"></textarea>
-    <h2>의견 게시판</h2>
-    <textarea rows="4" style="width:100%;"></textarea>
-    <p>포인트로 생태·환경 보호 단체를 후원할 수 있습니다.</p>
-    <input type="number" id="donation-amount" placeholder="후원 금액 입력">
-    <button id="donate-btn">후원하기</button>
-  </div>
-
-  <!-- Shop -->
-  <div id="shop-content" class="content-section">
-    <h2>Shop</h2>
-    <input type="text" id="search-item" placeholder="상품 검색">
-    <div id="shop-items">
-      <div class="item">
-        <img src="https://images.unsplash.com/photo-1598966893418-376fda64b4d2">
-        <p>대나무 칫솔 - 3000P</p>
-        <button onclick="purchase(3000)">구매하기</button>
-      </div>
-      <div class="item">
-        <img src="https://images.unsplash.com/photo-1563245372-f26b8c7e3a9e">
-        <p>에코 텀블러 - 5000P</p>
-        <button onclick="purchase(5000)">구매하기</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Campaign -->
-  <div id="campaign-content" class="content-section">
-    <h2>+ 미션 올리기</h2>
-    <input type="text" placeholder="게시물 제목" style="width:100%;margin-bottom:10px;">
-    <textarea rows="5" placeholder="게시물 내용" style="width:100%;"></textarea>
-  </div>
-
   <script>
     const sec1=document.getElementById("sec1"),
           sec2=document.getElementById("sec2"),
@@ -197,7 +130,7 @@
       showSection(sec2);
     });
 
-    // ✅ 비밀번호 조건 삭제됨
+    // ✅ 비밀번호 조건 및 규칙 안내 완전 제거
     document.getElementById("btn-do-signup").onclick=()=>{
       const name=document.getElementById("su-name").value.trim();
       const dob=document.getElementById("su-dob").value;
@@ -241,59 +174,6 @@
         updatePoints();
       }else alert("충전 금액을 올바르게 입력하세요.");
     };
-
-    let selectedAvatar="male";
-    document.getElementById("avatar-male").onclick=()=>selectAvatar("male");
-    document.getElementById("avatar-female").onclick=()=>selectAvatar("female");
-
-    function selectAvatar(type){
-      selectedAvatar=type;
-      document.getElementById("avatar-male").classList.remove("selected");
-      document.getElementById("avatar-female").classList.remove("selected");
-      document.getElementById(`avatar-${type}`).classList.add("selected");
-    }
-
-    document.querySelectorAll(".color-option").forEach(c=>{
-      c.onclick=()=>{bgColor=c.style.background;};
-    });
-
-    document.getElementById("save-avatar").onclick=()=>{
-      avatarURL=selectedAvatar==="male"
-        ?"https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
-        :"https://cdn-icons-png.flaticon.com/512/4140/4140048.png";
-      profilePic.style.background=`${bgColor} url('${avatarURL}') center/60% no-repeat`;
-      alert("프로필이 변경되었습니다!");
-    };
-
-    document.getElementById("donate-btn").onclick=()=>{
-      const amount=parseInt(document.getElementById("donation-amount").value);
-      processPayment(amount,"후원");
-    };
-
-    function purchase(price){
-      processPayment(price,"상품 결제");
-    }
-
-    function processPayment(amount,type){
-      if(amount<=0){alert("금액을 올바르게 입력하세요.");return;}
-      if(userPoints>=amount){
-        userPoints-=amount;
-        alert(`${type} 완료! ${amount}P 차감되었습니다.`);
-        updatePoints();
-      }else{
-        if(!accountRegistered){alert("포인트가 부족하고 계좌가 등록되지 않았습니다.");return;}
-        const shortage=amount-userPoints;
-        const confirmPay=prompt(`포인트가 부족합니다. 부족분 ${shortage}원을 계좌로 결제하시겠습니까? (Y/N)`);
-        if(confirmPay&&confirmPay.toUpperCase()==="Y"){
-          const inputPIN=prompt("결제 비밀번호를 입력하세요:");
-          if(inputPIN===payPIN){
-            userPoints=0;
-            alert(`${type} 완료! 부족분 ${shortage}원이 결제되었습니다.`);
-            updatePoints();
-          }else alert("결제 비밀번호가 올바르지 않습니다.");
-        }
-      }
-    }
   </script>
 </body>
 </html>

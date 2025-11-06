@@ -193,7 +193,10 @@
       pointDisplay.textContent=`💰 ${userPoints}P`;
     }
 
-    document.getElementById("to-signup").onclick=()=>showSection(sec2);
+    // ✅ 수정된 부분: 회원가입 링크 클릭 시 2번째 섹션으로 이동
+    document.getElementById("to-signup").addEventListener("click", ()=>{
+      showSection(sec2);
+    });
 
     document.getElementById("btn-do-signup").onclick=()=>{
       const name=document.getElementById("su-name").value.trim();
@@ -241,7 +244,6 @@
       }else alert("충전 금액을 올바르게 입력하세요.");
     };
 
-    // ✅ 프로필 아바타 변경
     let selectedAvatar="male";
     document.getElementById("avatar-male").onclick=()=>selectAvatar("male");
     document.getElementById("avatar-female").onclick=()=>selectAvatar("female");
@@ -265,7 +267,6 @@
       alert("프로필이 변경되었습니다!");
     };
 
-    // ✅ 포인트 사용 로직 (후원 / 구매)
     document.getElementById("donate-btn").onclick=()=>{
       const amount=parseInt(document.getElementById("donation-amount").value);
       processPayment(amount,"후원");
@@ -283,4 +284,18 @@
         updatePoints();
       }else{
         if(!accountRegistered){alert("포인트가 부족하고 계좌가 등록되지 않았습니다.");return;}
-        const shortage
+        const shortage=amount-userPoints;
+        const confirmPay=prompt(`포인트가 부족합니다. 부족분 ${shortage}원을 계좌로 결제하시겠습니까? (Y/N)`);
+        if(confirmPay&&confirmPay.toUpperCase()==="Y"){
+          const inputPIN=prompt("결제 비밀번호를 입력하세요:");
+          if(inputPIN===payPIN){
+            userPoints=0;
+            alert(`${type} 완료! 부족분 ${shortage}원이 결제되었습니다.`);
+            updatePoints();
+          }else alert("결제 비밀번호가 올바르지 않습니다.");
+        }
+      }
+    }
+  </script>
+</body>
+</html>

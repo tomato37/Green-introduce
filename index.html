@@ -87,7 +87,6 @@
       <input id="su-dob" type="date">
       <input id="su-id" type="text" placeholder="아이디">
       <input id="su-pw" type="password" placeholder="비밀번호">
-      <p style="font-size:12px;color:#888;">비밀번호: 영문자(대문자,소문자), 특수문자, 숫자 포함 8자리 이상</p>
       <button id="btn-do-signup">회원가입</button>
     </div>
   </section>
@@ -193,19 +192,18 @@
       pointDisplay.textContent=`💰 ${userPoints}P`;
     }
 
-    // ✅ 수정된 부분: 회원가입 링크 클릭 시 2번째 섹션으로 이동
+    // ✅ 회원가입 클릭 시 2번째 섹션 이동
     document.getElementById("to-signup").addEventListener("click", ()=>{
       showSection(sec2);
     });
 
+    // ✅ 비밀번호 조건 삭제됨
     document.getElementById("btn-do-signup").onclick=()=>{
       const name=document.getElementById("su-name").value.trim();
       const dob=document.getElementById("su-dob").value;
       const id=document.getElementById("su-id").value.trim();
       const pw=document.getElementById("su-pw").value.trim();
-      const pwValid=/^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$/;
       if(!name||!dob||!id||!pw){alert("정보를 모두 입력해 주세요.");return;}
-      if(!pwValid.test(pw)){alert("비밀번호 조건에 맞지 않습니다.");return;}
       userDB={id,pw,name};
       alert("회원가입이 완료되었습니다.");
       showSection(sec1);

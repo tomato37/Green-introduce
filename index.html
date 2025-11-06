@@ -1,233 +1,298 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Introduce</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Green Introduce - Fixed</title>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Pretendard', sans-serif;
+  :root{
+    --bg:#f0f7f0;
+    --card:#fff;
+    --muted:#9aa5a0;
+    --accent:#2f9d5a;
   }
-  body, html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden; /* 스크롤 차단 */
-    background-color: #f0f7f0;
+  html,body{
+    height:100%;
+    margin:0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Helvetica Neue", Arial;
+    background:var(--bg);
+    overflow:hidden; /* 스크롤 차단: 섹션 이동은 JS로 제어 */
   }
 
   .section {
-    width: 100%;
-    height: 100vh;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    transition: opacity 0.6s ease;
+    width:100%;
+    height:100vh;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    transition:opacity .35s ease;
+  }
+  .section.active { display:flex; }
+
+  /* 공통 입력 스타일 */
+  .card{
+    width:520px;
+    max-width:92%;
+    background:var(--card);
+    border-radius:18px;
+    padding:34px;
+    box-shadow: 0 10px 30px rgba(10,30,15,0.06);
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    align-items:center;
+  }
+  h1{ margin:0; font-size:34px; color:#0b0b0b; transform:translateY(-6px); }
+  input{
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1px solid #e6efe7;
+    outline:none;
+    font-size:15px;
+  }
+  input::placeholder{ color:var(--muted); }
+
+  .muted-link{
+    color:var(--muted);
+    font-size:14px;
+    cursor:pointer;
+    user-select:none;
+    background:none;
+    border:none;
+  }
+  .muted-link:focus{ outline:2px solid rgba(47,157,90,0.15); border-radius:8px; }
+
+  /* small text */
+  .small-muted{ color:var(--muted); font-size:13px; text-align:center; }
+
+  /* top / main UI (section3) */
+  .topbar{
+    width:calc(100% - 80px);
+    max-width:1200px;
+    background:rgba(255,255,255,0.95);
+    border-radius:12px;
+    padding:12px 18px;
+    box-shadow:0 8px 24px rgba(10,30,10,0.04);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+  }
+  .hframe{
+    width:calc(100% - 80px);
+    max-width:1200px;
+    background:linear-gradient(180deg,#ffffff,#f7fff7);
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 8px 24px rgba(10,30,10,0.04);
   }
 
-  .active {
-    display: flex;
+  /* 버튼 스타일 */
+  .btn{
+    padding:10px 14px;
+    border-radius:10px;
+    border:none;
+    background:linear-gradient(180deg,#2f9d5a,#1f7a44);
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+  }
+  .btn.ghost{
+    background:transparent;
+    color:var(--muted);
+    border:1px solid #eef6ef;
   }
 
-  /* 1️⃣ 로그인 섹션 */
-  #section1 h1 {
-    font-size: 2.2rem;
-    margin-bottom: 30px;
-    color: black;
-  }
-  input {
-    width: 280px;
-    padding: 12px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 1rem;
-    text-align: center;
-  }
-  input::placeholder {
-    color: #aaa;
-  }
-  .small-link {
-    color: gray;
-    font-size: 0.9rem;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-
-  /* 2️⃣ 회원가입 섹션 */
-  #section2 {
-    background-color: #f4faf4;
-  }
-  #section2 h2 {
-    font-size: 1.8rem;
-    color: #1e4620;
-    margin-bottom: 25px;
-  }
-  .signup-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .signup-btn {
-    color: gray;
-    margin-top: 15px;
-    cursor: not-allowed;
-    font-size: 1rem;
-  }
-  .signup-btn.active {
-    color: #1e4620;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  /* 3️⃣ 메인 섹션 */
-  #section3 {
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-  }
-  .top-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.95rem;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-  }
-  .bottom-tabs {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
-  }
-  .tab {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  .tab:hover {
-    background-color: #e6f4e6;
+  /* simple responsive */
+  @media (max-width:640px){
+    .card{ padding:20px; }
+    input{ font-size:14px; }
   }
 </style>
 </head>
 <body>
-
-  <!-- 1️⃣ 로그인 섹션 -->
-  <section id="section1" class="section active">
-    <h1>Green Introduce</h1>
-    <input type="text" id="loginId" placeholder="아이디">
-    <input type="password" id="loginPw" placeholder="비번">
-    <div class="small-link" id="goSignup">회원가입</div>
-  </section>
-
-  <!-- 2️⃣ 회원가입 섹션 -->
-  <section id="section2" class="section">
-    <h2>회원가입</h2>
-    <div class="signup-box">
-      <input type="text" id="signupName" placeholder="이름">
-      <input type="text" id="signupBirth" placeholder="생년월일">
-      <input type="text" id="signupId" placeholder="아이디">
-      <input type="password" id="signupPw" placeholder="비번">
-      <div id="signupBtn" class="signup-btn">회원가입</div>
-      <p style="margin-top:10px; color:gray; font-size:0.9rem;">가입 후 로그인하면 바로 활동할 수 있습니다.</p>
-    </div>
-  </section>
-
-  <!-- 3️⃣ 메인 섹션 -->
-  <section id="section3" class="section">
-    <div class="top-info">
-      <div id="profileInfo">프로필: 사용자</div>
-      <div id="daysCount">이용 1일차</div>
-      <div id="pointInfo">포인트: 0원</div>
-    </div>
-
-    <div style="flex:1; display:flex; justify-content:center; align-items:center;">
-      <div id="mainContent">
-        <h2>오늘의 미션</h2>
-        <p>텀블러 사용 인증하기</p>
-        <p>참여자수: 125명</p>
-        <p>문의: support@green.com</p>
-        <p style="margin-top:10px; color:gray;">친환경 기업 광고 영역</p>
+  <!-- SECTION 1: 로그인 -->
+  <section id="sec1" class="section active" aria-label="로그인 섹션">
+    <div class="card" role="region" aria-labelledby="title1">
+      <h1 id="title1">Green introduce</h1>
+      <input id="login-id" type="text" placeholder="아이디" autocomplete="username" />
+      <input id="login-pw" type="password" placeholder="비번" autocomplete="current-password" />
+      <!-- 변경: a -> button (명확한 클릭 이벤트 보장) -->
+      <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+        <button id="btn-go-signup" class="muted-link" aria-label="회원가입으로 이동">회원가입</button>
+        <button id="btn-login" class="btn">로그인</button>
       </div>
+      <div style="margin-top:10px;"><div class="small-muted">생태·환경을 위한 아이디어와 활동을 공유하는 공간</div></div>
     </div>
+  </section>
 
-    <div class="bottom-tabs">
-      <div class="tab">커뮤니티</div>
-      <div class="tab">캠페인</div>
-      <div class="tab">메인</div>
-      <div class="tab">상점</div>
-      <div class="tab">챌린지</div>
+  <!-- SECTION 2: 회원가입 -->
+  <section id="sec2" class="section" aria-label="회원가입 섹션">
+    <div class="card" role="region" aria-labelledby="title2">
+      <h1 id="title2" style="font-size:24px;color:#0b6b3a;">회원가입</h1>
+      <input id="su-name" type="text" placeholder="이름" />
+      <!-- ✅ placeholder가 '생년월일'로 확실히 보이도록 설정 -->
+      <input id="su-dob" type="text" placeholder="생년월일" />
+      <input id="su-id" type="text" placeholder="아이디" />
+      <input id="su-pw" type="password" placeholder="비번" />
+      <div style="width:100%; display:flex; justify-content:center; margin-top:6px;">
+        <button id="btn-do-signup" class="muted-link" aria-label="회원가입">회원가입</button>
+      </div>
+      <div style="margin-top:8px;"><div class="small-muted">가입 후 로그인하면 바로 활동할 수 있습니다.</div></div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: 메인 -->
+  <section id="sec3" class="section" aria-label="메인 섹션">
+    <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
+      <div class="topbar" role="region" aria-label="상태바">
+        <div id="profile-area">비회원</div>
+        <div id="stats-area" style="display:flex; gap:12px;">
+          <div id="points">포인트: 0원</div>
+          <div id="days">이용일수: 0일</div>
+        </div>
+      </div>
+
+      <div class="hframe" role="main">
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Community</div>
+          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Campaign</div>
+          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Main (오늘의 미션)</div>
+          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Shop</div>
+          <div style="width:260px; padding:12px; background:#fff; border-radius:10px;">Challenge</div>
+        </div>
+      </div>
     </div>
   </section>
 
 <script>
-  const section1 = document.getElementById('section1');
-  const section2 = document.getElementById('section2');
-  const section3 = document.getElementById('section3');
+document.addEventListener('DOMContentLoaded', ()=> {
+  // 섹션 엘리먼트
+  const sec1 = document.getElementById('sec1');
+  const sec2 = document.getElementById('sec2');
+  const sec3 = document.getElementById('sec3');
 
-  const goSignup = document.getElementById('goSignup');
-  const signupBtn = document.getElementById('signupBtn');
+  // 버튼들
+  const btnGoSignup = document.getElementById('btn-go-signup');
+  const btnLogin = document.getElementById('btn-login');
+  const btnDoSignup = document.getElementById('btn-do-signup');
 
-  let userData = {};
+  // 입력들
+  const loginId = document.getElementById('login-id');
+  const loginPw = document.getElementById('login-pw');
+  const suName = document.getElementById('su-name');
+  const suDob = document.getElementById('su-dob');
+  const suId = document.getElementById('su-id');
+  const suPw = document.getElementById('su-pw');
 
-  // ✅ 회원가입 페이지로 이동
-  goSignup.addEventListener('click', () => {
-    section1.classList.remove('active');
-    section2.classList.add('active');
+  // 상태(한 유저만 시뮬레이션)
+  let registeredUser = null;
+
+  // 섹션 표시 헬퍼
+  function showSection(id){
+    console.log('showSection ->', id);
+    sec1.classList.remove('active');
+    sec2.classList.remove('active');
+    sec3.classList.remove('active');
+    if(id === 1) sec1.classList.add('active');
+    if(id === 2) sec2.classList.add('active');
+    if(id === 3) sec3.classList.add('active');
+  }
+
+  // 1) 회원가입 버튼(텍스트) 클릭 시 -> 2번 섹션으로 이동 (명확하게)
+  btnGoSignup.addEventListener('click', (e) => {
+    e.preventDefault && e.preventDefault();
+    console.log('회원가입 버튼 클릭 - 이동시도');
+    showSection(2);
+    // 포커스 UX: 생년월일 칸에 커서 두기(placeholder가 보이는지 확인 가능)
+    setTimeout(()=>{ suDob.focus(); }, 120);
   });
 
-  // 입력 감지하여 버튼 활성화
-  const inputs = document.querySelectorAll('#signupName, #signupBirth, #signupId, #signupPw');
-  inputs.forEach(input => {
-    input.addEventListener('input', () => {
-      const allFilled = Array.from(inputs).every(i => i.value.trim() !== "");
-      if (allFilled) signupBtn.classList.add('active');
-      else signupBtn.classList.remove('active');
+  // 2) 회원가입 처리: 모든 칸 입력 시 등록 가능
+  function canSignup(){
+    return suName.value.trim() && suDob.value.trim() && suId.value.trim() && suPw.value.trim();
+  }
+  // 시각적 활성화(선택적)
+  [suName, suDob, suId, suPw].forEach(el=>{
+    el.addEventListener('input', ()=>{
+      if(canSignup()){
+        btnDoSignup.style.color = 'var(--accent)';
+        btnDoSignup.style.fontWeight = '700';
+        btnDoSignup.style.cursor = 'pointer';
+      } else {
+        btnDoSignup.style.color = '';
+        btnDoSignup.style.fontWeight = '';
+        btnDoSignup.style.cursor = '';
+      }
     });
   });
 
-  // ✅ 회원가입 완료 처리
-  signupBtn.addEventListener('click', () => {
-    if (!signupBtn.classList.contains('active')) return;
-
-    userData = {
-      name: document.getElementById('signupName').value,
-      birth: document.getElementById('signupBirth').value,
-      id: document.getElementById('signupId').value,
-      pw: document.getElementById('signupPw').value
+  btnDoSignup.addEventListener('click', (e)=>{
+    e.preventDefault && e.preventDefault();
+    if(!canSignup()){
+      alert('모든 항목을 입력해 주세요.');
+      return;
+    }
+    // 저장(간단 시뮬레이션)
+    registeredUser = {
+      name: suName.value.trim(),
+      dob: suDob.value.trim(),
+      id: suId.value.trim(),
+      pw: suPw.value
     };
-
-    alert("회원가입이 완료되었습니다!");
-    // 다시 로그인 페이지로
-    section2.classList.remove('active');
-    section1.classList.add('active');
+    console.log('회원가입 완료, 저장된 유저:', registeredUser);
+    alert('회원가입이 완료되었습니다.');
+    // 입력창 초기화 보안
+    suPw.value = '';
+    // 다시 로그인 페이지로 이동
+    showSection(1);
+    loginId.value = registeredUser.id; // 편의상 아이디 채워줌
+    loginPw.value = '';
+    loginPw.focus();
   });
 
-  // ✅ 로그인 시 3번째 섹션으로 이동
-  document.getElementById('loginPw').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') loginCheck();
+  // 3) 로그인 처리 -> 올바르면 3번 섹션으로 이동
+  btnLogin.addEventListener('click', (e)=>{
+    e.preventDefault && e.preventDefault();
+    attemptLogin();
+  });
+  loginPw.addEventListener('keypress', (ev)=>{
+    if(ev.key === 'Enter') attemptLogin();
   });
 
-  function loginCheck() {
-    const id = document.getElementById('loginId').value;
-    const pw = document.getElementById('loginPw').value;
-    if (id === userData.id && pw === userData.pw) {
-      section1.classList.remove('active');
-      section3.classList.add('active');
-      document.getElementById('profileInfo').textContent = `프로필: ${userData.name}`;
+  function attemptLogin(){
+    const id = loginId.value.trim();
+    const pw = loginPw.value;
+    if(!registeredUser){
+      alert('등록된 계정이 없습니다. 회원가입 해주세요.');
+      return;
+    }
+    if(id === registeredUser.id && pw === registeredUser.pw){
+      // 로그인 성공: 3번 섹션으로 이동
+      console.log('로그인 성공 -> 메인으로 이동');
+      showSection(3);
+      // 프로필 표시 업데이트
+      const profileArea = document.getElementById('profile-area');
+      const pointsArea = document.getElementById('points');
+      const daysArea = document.getElementById('days');
+      profileArea.textContent = `${registeredUser.name} (@${registeredUser.id})`;
+      // 단순 초기값
+      pointsArea.textContent = '포인트: 0원';
+      const created = new Date().toISOString();
+      daysArea.textContent = '이용일수: 1일';
     } else {
-      alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+      alert('아이디 또는 비밀번호가 올바르지 않습니다.');
     }
   }
-</script>
 
+  // 초기 섹션 1 표시(확실히)
+  showSection(1);
+
+  // 개발자용 로그: 확실히 이벤트 연결되었는지 콘솔에 표시
+  console.log('Event listeners attached: btnGoSignup, btnDoSignup, btnLogin');
+});
+</script>
 </body>
 </html>

@@ -190,7 +190,7 @@ input {
   </div>
 </section>
 
-<!-- 각 서브 섹션 -->
+<!-- Main Section -->
 <section id="main-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
@@ -209,6 +209,7 @@ input {
   </div>
 </section>
 
+<!-- Challenge Section -->
 <section id="challenge-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
@@ -219,6 +220,7 @@ input {
   </div>
 </section>
 
+<!-- Community Section -->
 <section id="community-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
@@ -233,14 +235,16 @@ input {
   </div>
 </section>
 
+<!-- Shop Section -->
 <section id="shop-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
     <h2>Shop</h2>
-    <div id="shop-products" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;overflow-y:auto;"></div>
+    <div id="shop-products" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;"></div>
   </div>
 </section>
 
+<!-- Shop Buy Section -->
 <section id="shop-buy-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection('shop')">← 돌아가기</button>
@@ -254,6 +258,7 @@ input {
   </div>
 </section>
 
+<!-- Campaign Section -->
 <section id="campaign-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
@@ -264,7 +269,8 @@ input {
 
 <script>
 let registeredUser = null;
-let userPoints = 0;
+let userPoints = 10000; // 기본 포인트 예시
+let selectedProduct = null;
 
 const sections = {
   1: document.getElementById("sec1"),
@@ -278,109 +284,116 @@ const sections = {
   campaign: document.getElementById("campaign-sec"),
 };
 
-function showSection(id){
-  for(const k in sections) sections[k].classList.remove("active");
+function showSection(id) {
+  for (const k in sections) sections[k].classList.remove("active");
   sections[id].classList.add("active");
 }
 
-document.getElementById("btn-go-signup").onclick=()=>showSection(2);
-document.getElementById("btn-do-signup").onclick=()=>{
-  const name=document.getElementById("su-name").value.trim();
-  const dob=document.getElementById("su-dob").value.trim();
-  const id=document.getElementById("su-id").value.trim();
-  const pw=document.getElementById("su-pw").value.trim();
-  if(!name||!dob||!id||!pw){ alert("정보를 모두 입력해 주세요."); return; }
-  registeredUser={name,id,pw};
+document.getElementById("btn-go-signup").onclick = () => showSection(2);
+
+document.getElementById("btn-do-signup").onclick = () => {
+  const name = document.getElementById("su-name").value.trim();
+  const dob = document.getElementById("su-dob").value.trim();
+  const id = document.getElementById("su-id").value.trim();
+  const pw = document.getElementById("su-pw").value.trim();
+  if (!name || !dob || !id || !pw) {
+    alert("정보를 모두 입력해 주세요.");
+    return;
+  }
+  registeredUser = { name, id, pw };
   alert("회원가입이 완료되었습니다.");
   showSection(1);
 };
 
-document.getElementById("btn-login").onclick=()=>{
-  const id=document.getElementById("login-id").value.trim();
-  const pw=document.getElementById("login-pw").value.trim();
-  if(registeredUser && id===registeredUser.id && pw===registeredUser.pw){
-    document.getElementById("profile-name").textContent=registeredUser.name;
+document.getElementById("btn-login").onclick = () => {
+  const id = document.getElementById("login-id").value.trim();
+  const pw = document.getElementById("login-pw").value.trim();
+  if (registeredUser && id === registeredUser.id && pw === registeredUser.pw) {
+    document.getElementById("profile-name").textContent = registeredUser.name;
+    document.getElementById("points-display").textContent = `포인트: ${userPoints}P`;
     showSection(3);
-  } else alert("아이디 또는 비밀번호가 잘못되었습니다.");
+  } else {
+    alert("아이디 또는 비밀번호가 잘못되었습니다.");
+  }
 };
 
-document.getElementById("tile-main").onclick=()=>showSection("main");
-document.getElementById("tile-challenge").onclick=()=>showSection("challenge");
-document.getElementById("tile-community").onclick=()=>showSection("community");
-document.getElementById("tile-shop").onclick=()=>showSection("shop");
-document.getElementById("tile-campaign").onclick=()=>showSection("campaign");
+document.getElementById("tile-main").onclick = () => showSection("main");
+document.getElementById("tile-challenge").onclick = () => showSection("challenge");
+document.getElementById("tile-community").onclick = () => showSection("community");
+document.getElementById("tile-shop").onclick = () => showSection("shop");
+document.getElementById("tile-campaign").onclick = () => showSection("campaign");
 
 /* Challenge 이미지 */
-const imgs=[
+const imgs = [
   "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
   "https://images.unsplash.com/photo-1473187983305-f615310e7daa",
   "https://images.unsplash.com/photo-1501004318641-b39e6451bec6",
   "https://images.unsplash.com/photo-1506765515384-028b60a970df",
-  "https://images.unsplash.com/photo-1473186578172-c141e6798cf4",
-  "https://images.unsplash.com/photo-1498579809087-ef1e558fd1da",
-  "https://images.unsplash.com/photo-1470770903676-69b98201ea1c",
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-  "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
 ];
-const gallery=document.getElementById("challenge-gallery");
-imgs.forEach(url=>{
-  const img=document.createElement("img");
-  img.src=url+"?auto=format&fit=crop&w=500&q=60";
+const gallery = document.getElementById("challenge-gallery");
+imgs.forEach(url => {
+  const img = document.createElement("img");
+  img.src = `${url}?auto=format&fit=crop&w=500&q=60`;
   gallery.appendChild(img);
 });
 
 /* Shop */
-const products=[
-  {name:"대나무 칫솔",price:3000,img:"https://cdn.pixabay.com/photo/2020/03/03/11/16/bamboo-toothbrush-4899572_960_720.jpg"},
-  {name:"리필 샴푸",price:12000,img:"https://cdn.pixabay.com/photo/2021/06/15/13/37/shampoo-6339255_960_720.jpg"},
-  {name:"친환경 장바구니",price:8000,img:"https://cdn.pixabay.com/photo/2017/02/20/19/20/shopping-bag-2083828_960_720.jpg"},
-  {name:"재활용 텀블러",price:10000,img:"https://cdn.pixabay.com/photo/2019/10/13/14/45/coffee-cup-4542106_960_720.jpg"},
+const products = [
+  { name: "대나무 칫솔", price: 3000, img: "https://cdn.pixabay.com/photo/2020/03/03/11/16/bamboo-toothbrush-4899572_960_720.jpg" },
+  { name: "리필 샴푸", price: 12000, img: "https://cdn.pixabay.com/photo/2021/06/15/13/37/shampoo-6339255_960_720.jpg" },
+  { name: "친환경 장바구니", price: 8000, img: "https://cdn.pixabay.com/photo/2017/02/20/19/20/shopping-bag-2083828_960_720.jpg" },
+  { name: "재활용 텀블러", price: 10000, img: "https://cdn.pixabay.com/photo/2019/10/13/14/45/coffee-cup-4542106_960_720.jpg" },
 ];
-const shop=document.getElementById("shop-products");
-products.forEach(p=>{
-  const div=document.createElement("div");
-  div.innerHTML=`<img src="${p.img}" style="width:100%;height:100px;object-fit:cover;border-radius:8px;"><h4>${p.name}</h4><p>${p.price}P</p>`;
-  div.style.border="1px solid #ddd";
-  div.style.borderRadius="8px";
-  div.style.padding="6px";
-  div.style.textAlign="center";
-  div.style.cursor="pointer";
-  div.onclick=()=>{
-    selectedProduct=p;
+
+const shop = document.getElementById("shop-products");
+products.forEach(p => {
+  const div = document.createElement("div");
+  div.innerHTML = `<img src="${p.img}" style="width:100%;height:100px;object-fit:cover;border-radius:8px;"><h4>${p.name}</h4><p>${p.price}P</p>`;
+  div.style.border = "1px solid #ddd";
+  div.style.borderRadius = "8px";
+  div.style.padding = "6px";
+  div.style.textAlign = "center";
+  div.style.cursor = "pointer";
+  div.onclick = () => {
+    selectedProduct = p;
     showSection("shopBuy");
   };
   shop.appendChild(div);
 });
-let selectedProduct=null;
 
 /* 구매하기 */
-document.getElementById("btn-buy").onclick=()=>{
-  const qty=+document.getElementById("buy-qty").value;
-  const pts=+document.getElementById("buy-points").value;
-  if(!selectedProduct||!qty||!pts){alert("모든 정보를 입력해주세요.");return;}
-  const total=selectedProduct.price*qty;
-  if(userPoints>=total){
-    userPoints-=total;
-    alert("포인트로 결제되었습니다! 잔여 포인트: "+userPoints);
-  }else{
+document.getElementById("btn-buy").onclick = () => {
+  const qty = parseInt(document.getElementById("buy-qty").value);
+  const pts = parseInt(document.getElementById("buy-points").value);
+  if (!selectedProduct || !qty || isNaN(pts)) {
+    alert("모든 정보를 입력해주세요.");
+    return;
+  }
+  const total = selectedProduct.price * qty;
+  if (userPoints >= total) {
+    userPoints -= total;
+    alert(`포인트로 결제되었습니다! 잔여 포인트: ${userPoints}`);
+  } else {
     alert("포인트가 부족하여 등록 계좌에서 결제되었습니다.");
   }
-  document.getElementById("points-display").textContent="포인트: "+userPoints+"P";
+  document.getElementById("points-display").textContent = `포인트: ${userPoints}P`;
   showSection("shop");
 };
 
 /* 후원 기능 */
-document.getElementById("btn-donate").onclick=()=>{
-  const amt=+document.getElementById("donate-amount").value;
-  if(!amt){alert("금액을 입력해주세요.");return;}
-  if(userPoints>=amt){
-    userPoints-=amt;
-    alert("후원이 완료되었습니다! 남은 포인트: "+userPoints);
+document.getElementById("btn-donate").onclick = () => {
+  const amt = parseInt(document.getElementById("donate-amount").value);
+  if (!amt) {
+    alert("금액을 입력해주세요.");
+    return;
+  }
+  if (userPoints >= amt) {
+    userPoints -= amt;
+    alert(`후원이 완료되었습니다! 남은 포인트: ${userPoints}`);
   } else {
     alert("포인트가 부족하여 계좌에서 추가 결제되었습니다.");
   }
-  document.getElementById("points-display").textContent="포인트: "+userPoints+"P";
+  document.getElementById("points-display").textContent = `포인트: ${userPoints}P`;
 };
 </script>
 </body>

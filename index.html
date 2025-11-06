@@ -1,392 +1,286 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Green Introduce - Extended Version</title>
-<style>
-:root {
-  --bg: #f0f7f0;
-  --card: #fff;
-  --muted: #9aa5a0;
-  --accent: #2f9d5a;
-}
-html, body {
-  height: 100%;
-  margin: 0;
-  font-family: "Noto Sans KR", sans-serif;
-  background: var(--bg);
-  overflow: hidden;
-}
-.section {
-  width: 100%;
-  height: 100vh;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  position: relative;
-}
-.section.active { display: flex; }
-
-.card {
-  width: 520px;
-  max-width: 92%;
-  background: var(--card);
-  border-radius: 18px;
-  padding: 34px;
-  box-shadow: 0 10px 30px rgba(10,30,15,0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  align-items: center;
-}
-input, textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #e6efe7;
-  font-size: 15px;
-}
-input::placeholder { color: var(--muted); }
-textarea { resize: none; height: 80px; }
-
-.muted-link {
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 14px;
-  cursor: pointer;
-}
-.btn {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: none;
-  background: linear-gradient(180deg,#2f9d5a,#1f7a44);
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-/* SECTION 3 */
-.topbar {
-  width: calc(100% - 80px);
-  max-width: 1200px;
-  background: rgba(255,255,255,0.95);
-  border-radius: 12px;
-  padding: 12px 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-.profile img {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 220px);
-  grid-template-rows: repeat(2, 160px);
-  gap: 20px;
-}
-.tile {
-  background: #fff;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(10,30,10,0.04);
-  text-align: center;
-}
-.logo {
-  position: absolute;
-  bottom: 12px;
-  right: 18px;
-  font-weight: 800;
-  font-size: 28px;
-  color: rgba(47,157,90,0.25);
-  user-select: none;
-}
-
-/* 광고 영역 */
-.ad-box {
-  margin-top: 20px;
-  padding: 16px;
-  background: #e8f5e9;
-  border-radius: 12px;
-  text-align: center;
-  border: 1px solid #c8e6c9;
-}
-
-/* challenge 섹션 */
-#challenge-sec {
-  overflow-y: auto;
-  height: 100vh;
-  padding: 40px;
-}
-.challenge-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
-  gap: 16px;
-}
-.challenge-gallery img {
-  width: 100%;
-  border-radius: 12px;
-}
-.upload-box {
-  margin-top: 20px;
-  padding: 16px;
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-}
-
-/* Community */
-.com-box {
-  width: 500px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-/* Shop 구매창 */
-.shop-item {
-  width: 160px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  text-align: center;
-  cursor: pointer;
-}
-.shop-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 14px;
-}
-.shop-item img { width:100%; border-radius: 8px; }
-
-/* 모달창 */
-.modal {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.5);
-  display:none;
-  justify-content:center;
-  align-items:center;
-}
-.modal.active { display:flex; }
-.modal-content {
-  background:#fff;
-  border-radius:10px;
-  padding:20px;
-  width:300px;
-  text-align:center;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Green Introduce</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Pretendard',sans-serif;}
+    body,html{width:100%;height:100%;overflow:hidden;background:#f9fbf9;}
+    .section{width:100%;height:100vh;display:none;justify-content:center;align-items:center;transition:all .5s ease;}
+    #sec1{display:flex;flex-direction:column;text-align:center;}
+    input,button{margin:8px 0;padding:10px;width:260px;border-radius:8px;border:1px solid #ccc;}
+    .muted-link{color:gray;cursor:pointer;}
+    .muted-link:hover{text-decoration:underline;}
+    #profile-bar{position:fixed;top:10px;left:20px;display:flex;align-items:center;gap:10px;}
+    #profile-pic{width:40px;height:40px;border-radius:50%;background:#d3e5d1 url('https://cdn-icons-png.flaticon.com/512/1077/1077114.png') center/60% no-repeat;cursor:pointer;}
+    #profile-menu{display:none;position:absolute;top:60px;left:10px;background:white;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,0.15);padding:20px;width:260px;}
+    .hidden{display:none;}
+    #sec3{display:none;flex-direction:column;align-items:center;justify-content:center;}
+    #grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:20px;text-align:center;width:80%;height:70%;}
+    .grid-item{background:white;border-radius:16px;box-shadow:0 2px 6px rgba(0,0,0,0.15);display:flex;justify-content:center;align-items:center;cursor:pointer;font-size:1.2em;}
+    #logo{position:absolute;bottom:20px;right:30px;opacity:0.35;font-weight:700;color:#4caf50;font-size:24px;}
+    .content-section{display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:white;overflow-y:auto;padding:20px;}
+    .photo-grid img{width:100%;border-radius:12px;margin-bottom:10px;}
+    #shop-items{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+    .item{width:160px;background:white;border:1px solid #eee;border-radius:10px;text-align:center;padding:10px;}
+    .item img{width:100%;border-radius:10px;height:120px;object-fit:cover;}
+    #purchase-modal{display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);justify-content:center;align-items:center;}
+    #purchase-box{background:white;padding:20px;border-radius:12px;width:300px;}
+    #point-display{font-weight:bold;color:#4caf50;}
+    .color-option{width:25px;height:25px;border-radius:50%;cursor:pointer;border:1px solid #ccc;}
+    .color-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;}
+    .avatar-option{width:40px;height:40px;border-radius:50%;cursor:pointer;border:2px solid transparent;background-size:70%;background-repeat:no-repeat;background-position:center;}
+    .avatar-option.selected{border:2px solid #4caf50;}
+  </style>
 </head>
 <body>
-
-<!-- SECTION 3 -->
-<section id="sec3" class="section active">
-  <div class="topbar">
-    <div class="profile" id="profile-btn">
-      <img id="profile-img" src="https://cdn-icons-png.flaticon.com/512/847/847969.png">
-      <span id="user-name">비회원</span>
-    </div>
-    <div id="stats-area">
-      <span id="points">포인트: 0원</span> | <span id="days">이용일수: 0일</span>
+  <!-- 프로필 영역 -->
+  <div id="profile-bar" class="hidden">
+    <div id="profile-pic"></div>
+    <span id="profile-name"></span>
+    <span id="point-display"></span>
+    <div id="profile-menu">
+      <p>👤 프로필 변경</p>
+      <div style="display:flex;gap:10px;justify-content:center;margin:10px 0;">
+        <div id="avatar-male" class="avatar-option" style="background-image:url('https://cdn-icons-png.flaticon.com/512/1077/1077114.png');"></div>
+        <div id="avatar-female" class="avatar-option" style="background-image:url('https://cdn-icons-png.flaticon.com/512/4140/4140048.png');"></div>
+      </div>
+      <p style="font-size:14px;">🎨 배경색 선택</p>
+      <div class="color-grid">
+        <div class="color-option" style="background:#4caf50;"></div>
+        <div class="color-option" style="background:#2196f3;"></div>
+        <div class="color-option" style="background:#ffeb3b;"></div>
+        <div class="color-option" style="background:#e91e63;"></div>
+        <div class="color-option" style="background:#9c27b0;"></div>
+        <div class="color-option" style="background:#ff9800;"></div>
+        <div class="color-option" style="background:#00bfa5;"></div>
+        <div class="color-option" style="background:#9e9e9e;"></div>
+      </div>
+      <button id="save-avatar" style="margin-top:10px;">저장하기</button>
+      <hr style="margin:15px 0;">
+      <p>💳 카드/통장 등록</p>
+      <input type="text" id="card-number" placeholder="계좌번호">
+      <input type="password" id="pay-pin" placeholder="결제 비밀번호 (4자리)">
+      <button id="save-card">저장</button>
+      <hr style="margin:10px 0;">
+      <p>💰 포인트 충전하기</p>
+      <input type="number" id="charge-amount" placeholder="충전 금액">
+      <input type="password" id="charge-pin" placeholder="결제 비밀번호 확인">
+      <button id="charge-btn">충전하기</button>
     </div>
   </div>
 
-  <div class="grid">
-    <div class="tile" id="tile-main" style="grid-row:1;grid-column:1;">Main</div>
-    <div class="tile" id="tile-challenge" style="grid-row:1;grid-column:2;">Challenge</div>
-    <div class="tile" id="tile-community" style="grid-row:1;grid-column:3;">Community</div>
-    <div class="tile" id="tile-campaign" style="grid-row:2;grid-column:1;">Campaign</div>
-    <div class="tile" id="tile-shop" style="grid-row:2;grid-column:2;">Shop</div>
-  </div>
+  <!-- 1️⃣ 로그인 -->
+  <section id="sec1" class="section">
+    <h1>Green Introduce</h1>
+    <input type="text" id="login-id" placeholder="아이디">
+    <input type="password" id="login-pw" placeholder="비밀번호">
+    <button onclick="login()">로그인</button>
+    <span class="muted-link" id="to-signup">회원가입</span>
+  </section>
 
-  <div class="logo">Green🌱Life</div>
-</section>
+  <!-- 2️⃣ 회원가입 -->
+  <section id="sec2" class="section">
+    <div class="card">
+      <h2>회원가입</h2>
+      <input id="su-name" type="text" placeholder="이름">
+      <input id="su-dob" type="date">
+      <input id="su-id" type="text" placeholder="아이디">
+      <input id="su-pw" type="password" placeholder="비밀번호">
+      <p style="font-size:12px;color:#888;">비밀번호: 영문자(대문자,소문자), 특수문자, 숫자 포함 8자리 이상</p>
+      <button id="btn-do-signup">회원가입</button>
+    </div>
+  </section>
 
-<!-- MAIN -->
-<section id="main-sec" class="section">
-  <div class="card">
-    <button class="btn" onclick="showSection(3)">← 돌아가기</button>
+  <!-- 3️⃣ 메인 섹션 -->
+  <section id="sec3" class="section">
+    <div id="grid">
+      <div class="grid-item" id="main-btn">Main</div>
+      <div class="grid-item" id="challenge-btn">Challenge</div>
+      <div class="grid-item" id="community-btn">Community</div>
+      <div class="grid-item" id="campaign-btn">Campaign</div>
+      <div class="grid-item" id="shop-btn">Shop</div>
+    </div>
+    <div id="logo">🌿 GreenIntroduce</div>
+  </section>
+
+  <!-- Main -->
+  <div id="main-content" class="content-section">
     <h2>오늘의 미션</h2>
-    <div class="mission-box">
-      <p>1. 일회용품 줄이기</p>
-      <p>2. 분리배출 철저히 하기</p>
-      <p>3. 에너지 절약하기</p>
-      <p>4. 대중교통/자전거 이용하기</p>
-      <p>5. 친환경 소비 실천하기</p>
-    </div>
-
-    <div class="ad-box">
-      <h3>🌿 Green Earth Co.</h3>
-      <p>우리의 친환경 제품으로 지구를 보호하세요.</p>
-      <p>재활용 소재 100% · 탄소중립 생산</p>
-      <small>www.greenearth.com</small>
-    </div>
-  </div>
-</section>
-
-<!-- CHALLENGE -->
-<section id="challenge-sec" class="section">
-  <button class="btn" onclick="showSection(3)">← 돌아가기</button>
-  <h2>생태·환경 관련 숏츠/동영상</h2>
-
-  <div class="challenge-gallery">
-    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600" />
-    <img src="https://images.unsplash.com/photo-1473187983305-f615310e7daa?w=600" />
-    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600" />
-    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600" />
-    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600" />
-    <img src="https://images.unsplash.com/photo-1455218873509-8097305ee378?w=600" />
-    <img src="https://images.unsplash.com/photo-1493810329807-1b6b0b24d8dc?w=600" />
-    <img src="https://images.unsplash.com/photo-1498931299472-f7a63a5a1cfa?w=600" />
-    <img src="https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?w=600" />
-    <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600" />
+    <ul>
+      <li>일회용품 줄이기</li>
+      <li>분리배출 철저히 하기</li>
+      <li>에너지 절약하기</li>
+      <li>대중교통/자전거 이용하기</li>
+      <li>친환경 소비 실천하기</li>
+    </ul>
+    <h3 style="margin-top:20px;">🌱 EcoFriend 광고</h3>
+    <p>친환경 스타트업 EcoFriend가 만든 <strong>대나무 칫솔</strong>을 사용해보세요.<br>지구를 위한 작은 습관, EcoFriend와 함께 🌏</p>
   </div>
 
-  <button class="btn" style="margin-top:20px;" onclick="document.getElementById('upload-box').style.display='block'">+ 업로드</button>
-
-  <div class="upload-box" id="upload-box" style="display:none;">
-    <h3>새 숏츠 / 동영상 업로드</h3>
-    <input type="file">
-    <input type="text" placeholder="미디어 제목">
-    <input type="text" placeholder="해시태그 (#환경 #생태 등)">
-    <button class="btn" onclick="alert('게시 완료!');document.getElementById('upload-box').style.display='none';">게시하기</button>
-  </div>
-</section>
-
-<!-- COMMUNITY -->
-<section id="community-sec" class="section">
-  <button class="btn" onclick="showSection(3)">← 돌아가기</button>
-  <h2>Community</h2>
-  <h4>문의사항</h4>
-  <div class="com-box"><textarea placeholder="문의사항을 입력하세요."></textarea></div>
-  <h4>의견 게시판</h4>
-  <div class="com-box"><textarea placeholder="의견을 남겨주세요."></textarea></div>
-  <p>포인트로 생태·환경 보호 단체를 후원할 수 있습니다.</p>
-  <button class="btn" onclick="document.getElementById('donate-modal').classList.add('active')">후원하기</button>
-</section>
-
-<!-- SHOP -->
-<section id="shop-sec" class="section">
-  <button class="btn" onclick="showSection(3)">← 돌아가기</button>
-  <h2>친환경 제품 상점</h2>
-  <div class="shop-grid" id="shop-items">
-    <div class="shop-item" onclick="openPurchase('대나무 칫솔',500)">
-      <img src="https://images.unsplash.com/photo-1606813902787-4b12b7d88b56?w=400">
-      <p>대나무 칫솔<br>500P</p>
-    </div>
-    <div class="shop-item" onclick="openPurchase('친환경 텀블러',800)">
-      <img src="https://images.unsplash.com/photo-1564849444446-f876dcef378d?w=400">
-      <p>친환경 텀블러<br>800P</p>
-    </div>
-    <div class="shop-item" onclick="openPurchase('리필 샴푸',600)">
-      <img src="https://images.unsplash.com/photo-1585238342028-1a7420a2d9e1?w=400">
-      <p>리필 샴푸<br>600P</p>
-    </div>
-    <div class="shop-item" onclick="openPurchase('에코백',700)">
-      <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400">
-      <p>에코백<br>700P</p>
-    </div>
-    <div class="shop-item" onclick="openPurchase('천연비누',400)">
-      <img src="https://images.unsplash.com/photo-1601046933861-2f3b4e6b8bb1?w=400">
-      <p>천연비누<br>400P</p>
+  <!-- Challenge -->
+  <div id="challenge-content" class="content-section">
+    <h2>생태·환경 관련 숏츠 / 동영상</h2>
+    <div class="photo-grid">
+      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6">
+      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b">
+      <img src="https://images.unsplash.com/photo-1503264116251-35a269479413">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+      <img src="https://images.unsplash.com/photo-1517511620798-cec17d428bc0">
+      <img src="https://images.unsplash.com/photo-1496483648148-47c686dc86a8">
+      <img src="https://images.unsplash.com/photo-1473187983305-f615310e7daa">
+      <img src="https://images.unsplash.com/photo-1503264116251-35a269479413">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e">
     </div>
   </div>
-</section>
 
-<!-- CAMPAIGN -->
-<section id="campaign-sec" class="section">
-  <button class="btn" onclick="showSection(3)">← 돌아가기</button>
-  <h2>Campaign</h2>
-  <p>+ 미션 올리기를 눌러 생태/환경 문제 해결을 위한 미션을 제시하거나 실천 인증을 공유하세요.</p>
-  <button class="btn" onclick="showSection('mission-upload')">+ 미션 올리기</button>
-</section>
-
-<!-- 미션 업로드 -->
-<section id="mission-upload" class="section">
-  <div class="card">
-    <button class="btn" onclick="showSection('campaign-sec')">← 돌아가기</button>
-    <h3>미션 게시물 작성</h3>
-    <input type="text" placeholder="게시물 제목">
-    <textarea placeholder="게시물 내용을 입력하세요."></textarea>
-    <button class="btn" onclick="alert('게시 완료!');showSection('campaign-sec');">게시하기</button>
+  <!-- Community -->
+  <div id="community-content" class="content-section">
+    <h2>문의사항</h2>
+    <textarea rows="4" style="width:100%;"></textarea>
+    <h2>의견 게시판</h2>
+    <textarea rows="4" style="width:100%;"></textarea>
+    <p>포인트로 생태·환경 보호 단체를 후원할 수 있습니다.</p>
+    <input type="number" id="donation-amount" placeholder="후원 금액 입력">
+    <button id="donate-btn">후원하기</button>
   </div>
-</section>
 
-<!-- 후원 모달 -->
-<div id="donate-modal" class="modal">
-  <div class="modal-content">
-    <h3>후원하기</h3>
-    <input type="number" id="donate-amount" placeholder="후원할 금액 (P)">
-    <button class="btn" onclick="finishDonate()">후원하기</button>
+  <!-- Shop -->
+  <div id="shop-content" class="content-section">
+    <h2>Shop</h2>
+    <input type="text" id="search-item" placeholder="상품 검색">
+    <div id="shop-items">
+      <div class="item">
+        <img src="https://images.unsplash.com/photo-1598966893418-376fda64b4d2">
+        <p>대나무 칫솔 - 3000P</p>
+        <button onclick="purchase(3000)">구매하기</button>
+      </div>
+      <div class="item">
+        <img src="https://images.unsplash.com/photo-1563245372-f26b8c7e3a9e">
+        <p>에코 텀블러 - 5000P</p>
+        <button onclick="purchase(5000)">구매하기</button>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- 구매 모달 -->
-<div id="purchase-modal" class="modal">
-  <div class="modal-content">
-    <h3 id="purchase-title">구매창</h3>
-    <input type="number" placeholder="구매개수">
-    <input type="text" placeholder="이름">
-    <input type="text" placeholder="아이디">
-    <input type="password" placeholder="비밀번호">
-    <input type="number" placeholder="사용할 포인트">
-    <button class="btn" onclick="finishPurchase()">결제하기</button>
+  <!-- Campaign -->
+  <div id="campaign-content" class="content-section">
+    <h2>+ 미션 올리기</h2>
+    <input type="text" placeholder="게시물 제목" style="width:100%;margin-bottom:10px;">
+    <textarea rows="5" placeholder="게시물 내용" style="width:100%;"></textarea>
   </div>
-</div>
 
-<script>
-function showSection(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  const el = document.getElementById(typeof id==='string'?id:'sec'+id);
-  if(el) el.classList.add('active');
-}
+  <script>
+    const sec1=document.getElementById("sec1"),
+          sec2=document.getElementById("sec2"),
+          sec3=document.getElementById("sec3"),
+          profileBar=document.getElementById("profile-bar"),
+          profilePic=document.getElementById("profile-pic"),
+          profileMenu=document.getElementById("profile-menu"),
+          pointDisplay=document.getElementById("point-display");
 
-/* SHOP PURCHASE */
-let currentItem = '';
-function openPurchase(name,price){
-  currentItem = name;
-  document.getElementById('purchase-title').innerText = `구매창 - ${name} (${price}P)`;
-  document.getElementById('purchase-modal').classList.add('active');
-}
-function finishPurchase(){
-  document.getElementById('purchase-modal').classList.remove('active');
-  alert("결제가 완료되었습니다!");
-}
+    let userDB={}, currentUser=null, userPoints=100, accountRegistered=false, payPIN="", avatarURL="", bgColor="#d3e5d1";
 
-/* DONATE */
-function finishDonate(){
-  const amt = document.getElementById('donate-amount').value;
-  if(amt>0){ alert(amt + "P 후원 완료!"); }
-  document.getElementById('donate-modal').classList.remove('active');
-}
+    window.onload=()=>{showSection(sec1); updatePoints();};
 
-/* TILE NAV */
-document.getElementById('tile-main').onclick=()=>showSection('main-sec');
-document.getElementById('tile-challenge').onclick=()=>showSection('challenge-sec');
-document.getElementById('tile-community').onclick=()=>showSection('community-sec');
-document.getElementById('tile-shop').onclick=()=>showSection('shop-sec');
-document.getElementById('tile-campaign').onclick=()=>showSection('campaign-sec');
-</script>
-</body>
-</html>
+    function showSection(sec){
+      [sec1,sec2,sec3].forEach(s=>s.style.display="none");
+      sec.style.display="flex";
+    }
+
+    function updatePoints(){
+      pointDisplay.textContent=`💰 ${userPoints}P`;
+    }
+
+    document.getElementById("to-signup").onclick=()=>showSection(sec2);
+
+    document.getElementById("btn-do-signup").onclick=()=>{
+      const name=document.getElementById("su-name").value.trim();
+      const dob=document.getElementById("su-dob").value;
+      const id=document.getElementById("su-id").value.trim();
+      const pw=document.getElementById("su-pw").value.trim();
+      const pwValid=/^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$/;
+      if(!name||!dob||!id||!pw){alert("정보를 모두 입력해 주세요.");return;}
+      if(!pwValid.test(pw)){alert("비밀번호 조건에 맞지 않습니다.");return;}
+      userDB={id,pw,name};
+      alert("회원가입이 완료되었습니다.");
+      showSection(sec1);
+    };
+
+    function login(){
+      const id=document.getElementById("login-id").value.trim();
+      const pw=document.getElementById("login-pw").value.trim();
+      if(id===userDB.id&&pw===userDB.pw){
+        currentUser=userDB.name;
+        profileBar.classList.remove("hidden");
+        document.getElementById("profile-name").textContent=currentUser;
+        showSection(sec3);
+        updatePoints();
+      }else alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+    }
+
+    profilePic.onclick=()=>{profileMenu.style.display=profileMenu.style.display==="none"?"block":"none";};
+
+    document.getElementById("save-card").onclick=()=>{
+      accountRegistered=true;
+      payPIN=document.getElementById("pay-pin").value;
+      alert("카드/통장 등록 완료!");
+      profileMenu.style.display="none";
+    };
+
+    document.getElementById("charge-btn").onclick=()=>{
+      const amount=parseInt(document.getElementById("charge-amount").value);
+      const pin=document.getElementById("charge-pin").value;
+      if(!accountRegistered){alert("먼저 카드/통장을 등록하세요.");return;}
+      if(pin!==payPIN){alert("결제 비밀번호가 올바르지 않습니다.");return;}
+      if(amount>0){
+        userPoints+=amount;
+        alert(`포인트 ${amount}P 충전 완료!`);
+        updatePoints();
+      }else alert("충전 금액을 올바르게 입력하세요.");
+    };
+
+    // ✅ 프로필 아바타 변경
+    let selectedAvatar="male";
+    document.getElementById("avatar-male").onclick=()=>selectAvatar("male");
+    document.getElementById("avatar-female").onclick=()=>selectAvatar("female");
+
+    function selectAvatar(type){
+      selectedAvatar=type;
+      document.getElementById("avatar-male").classList.remove("selected");
+      document.getElementById("avatar-female").classList.remove("selected");
+      document.getElementById(`avatar-${type}`).classList.add("selected");
+    }
+
+    document.querySelectorAll(".color-option").forEach(c=>{
+      c.onclick=()=>{bgColor=c.style.background;};
+    });
+
+    document.getElementById("save-avatar").onclick=()=>{
+      avatarURL=selectedAvatar==="male"
+        ?"https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
+        :"https://cdn-icons-png.flaticon.com/512/4140/4140048.png";
+      profilePic.style.background=`${bgColor} url('${avatarURL}') center/60% no-repeat`;
+      alert("프로필이 변경되었습니다!");
+    };
+
+    // ✅ 포인트 사용 로직 (후원 / 구매)
+    document.getElementById("donate-btn").onclick=()=>{
+      const amount=parseInt(document.getElementById("donation-amount").value);
+      processPayment(amount,"후원");
+    };
+
+    function purchase(price){
+      processPayment(price,"상품 결제");
+    }
+
+    function processPayment(amount,type){
+      if(amount<=0){alert("금액을 올바르게 입력하세요.");return;}
+      if(userPoints>=amount){
+        userPoints-=amount;
+        alert(`${type} 완료! ${amount}P 차감되었습니다.`);
+        updatePoints();
+      }else{
+        if(!accountRegistered){alert("포인트가 부족하고 계좌가 등록되지 않았습니다.");return;}
+        const shortage

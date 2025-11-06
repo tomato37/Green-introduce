@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Green Introduce - Expanded</title>
+<title>Green Introduce - Updated</title>
 <style>
 :root {
   --bg: #f0f7f0;
@@ -77,13 +77,26 @@ input::placeholder { color: var(--muted); }
   padding: 12px 18px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
 }
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.profile img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+/* ✅ 2행3열 그리드 정확히 */
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 260px);
-  grid-template-rows: repeat(3, 160px);
-  gap: 16px;
+  grid-template-columns: repeat(3, 220px);
+  grid-template-rows: repeat(2, 160px);
+  gap: 20px;
 }
 .tile {
   background: #fff;
@@ -157,7 +170,6 @@ input::placeholder { color: var(--muted); }
   <div class="card">
     <h2>회원가입</h2>
     <input id="su-name" type="text" placeholder="이름">
-    <!-- ✅ 1. 생년월일 datepicker -->
     <input id="su-dob" type="date" placeholder="생년월일">
     <input id="su-id" type="text" placeholder="아이디">
     <input id="su-pw" type="password" placeholder="비밀번호">
@@ -168,22 +180,24 @@ input::placeholder { color: var(--muted); }
 <!-- SECTION 3 -->
 <section id="sec3" class="section">
   <div class="topbar">
-    <div id="profile-area">비회원</div>
+    <div class="profile">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="user">
+      <span id="user-name">비회원</span>
+    </div>
     <div id="stats-area">
       <span id="points">포인트: 0원</span> | <span id="days">이용일수: 0일</span>
     </div>
   </div>
   <div class="grid">
-    <!-- ✅ 2~3. 위치 변경 + Main 글자 수정 -->
-    <div class="tile" id="tile-main" style="grid-column:1;grid-row:1;">Main</div>
-    <div class="tile" id="tile-challenge" style="grid-column:2;grid-row:1;">Challenge</div>
-    <div class="tile" id="tile-community" style="grid-column:2;grid-row:2;">Community</div>
-    <div class="tile" id="tile-shop" style="grid-column:1;grid-row:3;">Shop</div>
-    <div class="tile" id="tile-campaign" style="grid-column:2;grid-row:3;">Campaign</div>
+    <div class="tile" id="tile-main" style="grid-row:1;grid-column:1;">Main</div>
+    <div class="tile" id="tile-challenge" style="grid-row:1;grid-column:2;">Challenge</div>
+    <div class="tile" id="tile-community" style="grid-row:1;grid-column:3;">Community</div>
+    <div class="tile" id="tile-campaign" style="grid-row:2;grid-column:1;">Campaign</div>
+    <div class="tile" id="tile-shop" style="grid-row:2;grid-column:2;">Shop</div>
   </div>
 </section>
 
-<!-- 각 메뉴 클릭 시 열릴 섹션들 -->
+<!-- Community -->
 <section id="community-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
@@ -193,6 +207,7 @@ input::placeholder { color: var(--muted); }
   </div>
 </section>
 
+<!-- Main -->
 <section id="main-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
@@ -203,6 +218,7 @@ input::placeholder { color: var(--muted); }
   </div>
 </section>
 
+<!-- Challenge -->
 <section id="challenge-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
@@ -223,6 +239,7 @@ input::placeholder { color: var(--muted); }
   </div>
 </section>
 
+<!-- Shop -->
 <section id="shop-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
@@ -232,10 +249,12 @@ input::placeholder { color: var(--muted); }
   </div>
 </section>
 
+<!-- Shop 상세 -->
 <section id="shop-detail-sec" class="section">
   <div class="subsection" id="shop-detail-content"></div>
 </section>
 
+<!-- Shop 구매 -->
 <section id="shop-buy-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection('shop')">← 돌아가기</button>
@@ -244,17 +263,15 @@ input::placeholder { color: var(--muted); }
     <input placeholder="이름">
     <input placeholder="계좌번호">
     <input placeholder="카드 비밀번호">
-    <input id="auth-code" placeholder="인증번호 (2초 뒤 표시)">
-    <p id="code-area"></p>
   </div>
 </section>
 
+<!-- Campaign -->
 <section id="campaign-sec" class="section">
   <div class="subsection">
     <button class="backbtn" onclick="showSection(3)">← 돌아가기</button>
     <h2>Campaign</h2>
-    <p>+ 버튼을 눌러 환경 문제 해결 미션을 제시하거나 사진/영상을 공유할 수 있습니다.</p>
-    <p>게시물 1개당 3포인트 적립됩니다.</p>
+    <p>환경 문제 해결 미션을 제시하거나 사진/영상을 공유할 수 있습니다.</p>
     <button class="btn">+ 미션 올리기</button>
   </div>
 </section>
@@ -285,7 +302,8 @@ document.getElementById("btn-go-signup").onclick = ()=> showSection(2);
 document.getElementById("btn-do-signup").onclick = ()=>{
   const id = document.getElementById("su-id").value;
   const pw = document.getElementById("su-pw").value;
-  registeredUser = {id, pw, name: document.getElementById("su-name").value};
+  const name = document.getElementById("su-name").value;
+  registeredUser = {id, pw, name};
   alert("회원가입 완료!");
   showSection(1);
 };
@@ -293,39 +311,40 @@ document.getElementById("btn-login").onclick = ()=>{
   if(registeredUser &&
      registeredUser.id === document.getElementById("login-id").value &&
      registeredUser.pw === document.getElementById("login-pw").value){
+      document.getElementById("user-name").textContent = registeredUser.name;
       showSection(3);
   } else alert("아이디 또는 비밀번호가 잘못되었습니다.");
 };
 
-/* 타일 클릭 → 각 섹션 열기 */
+/* 타일 클릭 */
 document.getElementById("tile-community").onclick = ()=> showSection("community");
 document.getElementById("tile-main").onclick = ()=> showSection("main");
 document.getElementById("tile-challenge").onclick = ()=> showSection("challenge");
 document.getElementById("tile-shop").onclick = ()=> showSection("shop");
 document.getElementById("tile-campaign").onclick = ()=> showSection("campaign");
 
-/* Challenge + 버튼 */
+/* Challenge */
 document.getElementById("btn-add-challenge").onclick = ()=> showSection("challengeUpload");
 document.getElementById("btn-post-challenge").onclick = ()=>{
   alert("게시 완료!");
   showSection("challenge");
 };
 
-/* SHOP 데이터 */
+/* ✅ 실제 친환경 관련 이미지 */
 const products = [
-  {name:"대나무 칫솔", price:3000, img:"https://picsum.photos/200?1"},
-  {name:"리필 샴푸", price:12000, img:"https://picsum.photos/200?2"},
-  {name:"친환경 장바구니", price:8000, img:"https://picsum.photos/200?3"},
-  {name:"재활용 텀블러", price:10000, img:"https://picsum.photos/200?4"},
-  {name:"유기농 비누", price:6000, img:"https://picsum.photos/200?5"},
-  {name:"무플라스틱 컵", price:7000, img:"https://picsum.photos/200?6"},
-  {name:"에코백", price:5000, img:"https://picsum.photos/200?7"},
-  {name:"천연 수세미", price:4000, img:"https://picsum.photos/200?8"},
-  {name:"재활용 노트", price:2000, img:"https://picsum.photos/200?9"},
-  {name:"친환경 빨대 세트", price:3500, img:"https://picsum.photos/200?10"},
+  {name:"대나무 칫솔", price:3000, img:"https://cdn.pixabay.com/photo/2020/09/04/18/31/toothbrush-5544634_1280.jpg"},
+  {name:"리필 샴푸", price:12000, img:"https://cdn.pixabay.com/photo/2020/01/10/10/27/shampoo-4752688_1280.jpg"},
+  {name:"친환경 장바구니", price:8000, img:"https://cdn.pixabay.com/photo/2017/01/30/18/37/eco-bag-2023066_1280.jpg"},
+  {name:"재활용 텀블러", price:10000, img:"https://cdn.pixabay.com/photo/2020/09/18/10/38/tumbler-5580898_1280.jpg"},
+  {name:"유기농 비누", price:6000, img:"https://cdn.pixabay.com/photo/2016/03/05/22/46/soap-1237914_1280.jpg"},
+  {name:"무플라스틱 컵", price:7000, img:"https://cdn.pixabay.com/photo/2020/04/23/18/52/cup-5082675_1280.jpg"},
+  {name:"에코백", price:5000, img:"https://cdn.pixabay.com/photo/2017/06/14/03/00/bag-2405023_1280.jpg"},
+  {name:"천연 수세미", price:4000, img:"https://cdn.pixabay.com/photo/2018/12/22/11/31/loofah-3890150_1280.jpg"},
+  {name:"재활용 노트", price:2000, img:"https://cdn.pixabay.com/photo/2017/09/20/17/45/notebook-2760087_1280.jpg"},
+  {name:"친환경 빨대 세트", price:3500, img:"https://cdn.pixabay.com/photo/2021/06/29/12/51/metal-straw-6373915_1280.jpg"},
 ];
 const shopContainer = document.getElementById("shop-products");
-products.forEach((p,i)=>{
+products.forEach(p=>{
   const div = document.createElement("div");
   div.className="product";
   div.innerHTML=`<img src="${p.img}"><h4>${p.name}</h4><p>${p.price}P</p>`;
@@ -340,20 +359,6 @@ products.forEach((p,i)=>{
     showSection("shopDetail");
   };
   shopContainer.appendChild(div);
-});
-
-/* 구매창 인증번호 표시 */
-const codeArea = document.getElementById("code-area");
-document.getElementById("shop-buy-sec").addEventListener("transitionend", ()=>{
-  // not reliable; use timeout on enter
-});
-sections.shopBuy.addEventListener("transitionstart", ()=>{
-  if(sections.shopBuy.classList.contains("active")){
-    setTimeout(()=>{
-      const code = Math.floor(1000 + Math.random()*9000);
-      codeArea.textContent = "인증번호: "+code;
-    },2000);
-  }
 });
 </script>
 </body>
